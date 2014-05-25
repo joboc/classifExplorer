@@ -29,7 +29,7 @@ public class GUIGlobalCoordinator {
 	{
         m_guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         m_guiFrame.setTitle("Classification Explorer");
-        m_guiFrame.setSize(800,800);
+        m_guiFrame.setSize(1100,800);
         m_guiFrame.setLocationRelativeTo(null);
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {

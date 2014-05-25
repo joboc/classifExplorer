@@ -6,11 +6,14 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 
-public class GUISearchScreenCoordinator extends GUICoordinator {
-
+public class GUISearchScreenCoordinator extends GUICoordinator
+{
+	private SearchController searchController = new SearchController();
+    private JList resultsList;
 	public GUISearchScreenCoordinator(GUIGlobalCoordinator globalCoordinator)
 	{
 		super(globalCoordinator);
@@ -39,12 +42,18 @@ public class GUISearchScreenCoordinator extends GUICoordinator {
         txtInput.setPreferredSize(new Dimension(400, 30));
         addWidgetInGridBagPanel(searchPanel, gridBag, txtInput, 1, 2, 1, 1,0);
 
-        JList resultsList = new JList();
-        resultsList.setPreferredSize(new Dimension(600, 600));
-        resultsList.setBorder(txtInput.getBorder());
-        addWidgetInGridBagPanel(searchPanel, gridBag, resultsList, 1, 3, 2, 1, 0);
+        resultsList = new JList();
+        JScrollPane resultsListScrollPane = new JScrollPane(resultsList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        resultsListScrollPane.setPreferredSize(new Dimension(900, 600));
+        resultsListScrollPane.setBorder(txtInput.getBorder());
+        addWidgetInGridBagPanel(searchPanel, gridBag, resultsListScrollPane, 1, 3, 2, 1, 0);
 
+        fillListWithAllLabels();
+        
         setPanel(searchPanel);
 	}
-
+	private void fillListWithAllLabels()
+	{
+		resultsList.setListData(searchController.getAllLabels());
+	}
 }
