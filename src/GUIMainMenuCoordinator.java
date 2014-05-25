@@ -1,0 +1,42 @@
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+public class GUIMainMenuCoordinator extends GUICoordinator {
+	public GUIMainMenuCoordinator(GUIGlobalCoordinator globalCoordinator)
+	{
+		super(globalCoordinator);
+		initialize();
+	}
+	public void initialize()
+    {
+        JPanel menuPanel = new JPanel();
+        GridBagLayout gridBag = new GridBagLayout();
+        menuPanel.setLayout(gridBag);
+        
+        JLabel titleLbl = new JLabel("Classification");
+        titleLbl.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 36));
+        addWidgetInGridBagPanel(menuPanel, gridBag, titleLbl, 0, 0, 2, 1,0);
+
+        JLabel titleLbl2 = new JLabel("Explorer");
+        titleLbl2.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 36));
+        addWidgetInGridBagPanel(menuPanel, gridBag, titleLbl2, 0, 1, 2, 1,0);
+
+        JPanel titleLblEmpty = new JPanel();
+        titleLblEmpty.setPreferredSize(new Dimension(10, 70));
+        addWidgetInGridBagPanel(menuPanel, gridBag, titleLblEmpty, 0, 2, 1, 1,0);
+        
+        JButton gotoSearch = new JButton("Recherche d'actes");
+        addWidgetInGridBagPanel(menuPanel, gridBag, gotoSearch, 0, 3, 1, 1,100);
+
+        JButton exit = new JButton("Quitter");
+        addWidgetInGridBagPanel(menuPanel, gridBag, exit, 1, 3, 1, 1,100);
+        
+        setPanel(menuPanel);
+    }
+}
