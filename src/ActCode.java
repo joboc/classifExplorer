@@ -1,22 +1,22 @@
 import java.lang.Comparable;
 
 public class ActCode implements Comparable<ActCode> {
-	private String m_code;
+	private String m_value;
 
-	public ActCode(String code)
+	public ActCode(String value)
 	{
-		m_code = code;
+		m_value = value;
 	}
 	public ActCode(ActCode other)
 	{
-		m_code = new String(other.m_code);
+		m_value = new String(other.m_value);
 	}
-	public String getCode()
+	public String getValue()
 	{
-		return m_code;
+		return m_value;
 	}
 	public int compareTo(ActCode other)
 	{
-		return m_code.compareTo(other.m_code);
+		return m_value.compareTo(other.m_value);
 	}
 }

@@ -2,12 +2,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -47,6 +52,12 @@ public class GUISearchScreenCoordinator extends GUICoordinator
         addWidgetInGridBagPanel(searchPanel, gridBag, txtInput, 1, 2, 1, 1,0);
 
         resultsList = new JList();
+        resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        resultsList.addMouseListener(new MouseAdapter(){
+        	public void mouseClicked(MouseEvent e){
+        		reactToListSelection();
+        	}
+        });
         JScrollPane resultsListScrollPane = new JScrollPane(resultsList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         resultsListScrollPane.setPreferredSize(new Dimension(900, 600));
         resultsListScrollPane.setBorder(txtInput.getBorder());
@@ -56,18 +67,32 @@ public class GUISearchScreenCoordinator extends GUICoordinator
         
         setPanel(searchPanel);
 	}
+	public void activate(JFrame frame)
+	{
+		super.activate(frame);
+		txtInput.requestFocus();
+	}
 	private class TxtInputListener implements DocumentListener
 	{
 		public void insertUpdate(DocumentEvent e) { reactToTxtInputChange();}
 		public void removeUpdate(DocumentEvent e) { reactToTxtInputChange();}
 		public void changedUpdate(DocumentEvent e) { reactToTxtInputChange();}
 	}
+	private void fillListWithAllLabels()
+	{
+		resultsList.setListData(searchController.getAllLabels());
+	}
 	private void reactToTxtInputChange()
 	{
 		resultsList.setListData(searchController.getLabelsFilteredByInput(txtInput.getText()));
 	}
-	private void fillListWithAllLabels()
+	private void reactToListSelection()
 	{
-		resultsList.setListData(searchController.getAllLabels());
+		String code = searchController.getCodeAt(resultsList.getSelectedIndex());
+		double price = searchController.getPriceAt(resultsList.getSelectedIndex());
+		String displayPrice = price != 0.0 ? Double.toString(price) + "€" : "Non pris en charge";
+		String codeInfo = "Code : " + code + "\nTarif : " + displayPrice;
+		JOptionPane.showMessageDialog(null, codeInfo, "Informations sur l'acte", JOptionPane.PLAIN_MESSAGE);
+		txtInput.requestFocus();
 	}
 }

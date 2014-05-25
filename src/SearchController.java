@@ -31,6 +31,14 @@ public class SearchController {
 		
 		return buildLabelsFromActs(m_displayActs);
 	}
+	public String getCodeAt(int index)
+	{
+		return m_displayActs.get(index).getCode().getValue();
+	}
+	public double getPriceAt(int index)
+	{
+		return m_displayActs.get(index).getContent().getPrice();
+	}
 	private class actSorterByLabel implements Comparator<Act>
 	{
 		public int compare(Act a1, Act a2)
