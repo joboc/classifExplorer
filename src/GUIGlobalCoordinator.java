@@ -1,5 +1,3 @@
-import java.util.LinkedList;
-
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -10,13 +8,23 @@ public class GUIGlobalCoordinator {
 	GUICoordinator m_activeCoordinator;
 	GUICoordinator m_mainMenuCoordinator;
 	GUICoordinator m_searchScreenCoordinator;
-	public GUIGlobalCoordinator() {
+	public GUIGlobalCoordinator()
+	{
 		initializeFrame();
 		m_mainMenuCoordinator = new GUIMainMenuCoordinator(this);
 		m_searchScreenCoordinator = new GUISearchScreenCoordinator(this);
 
 		switchTo(m_mainMenuCoordinator);
 	}
+	public void reactToMainMenuGotoSearch()
+	{
+		switchTo(m_searchScreenCoordinator);
+	}
+	public void reactToExit()
+	{
+		System.exit(0);
+	}
+	
 	private void initializeFrame()
 	{
         m_guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

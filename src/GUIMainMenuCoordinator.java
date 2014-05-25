@@ -1,6 +1,8 @@
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -32,9 +34,19 @@ public class GUIMainMenuCoordinator extends GUICoordinator {
         addWidgetInGridBagPanel(menuPanel, gridBag, titleLblEmpty, 0, 2, 1, 1,0);
         
         JButton gotoSearch = new JButton("Recherche d'actes");
+        gotoSearch.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e){
+        		getGlobalCoordinator().reactToMainMenuGotoSearch();
+        	}
+        });
         addWidgetInGridBagPanel(menuPanel, gridBag, gotoSearch, 0, 3, 1, 1,100);
 
         JButton exit = new JButton("Quitter");
+        exit.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e){
+        		getGlobalCoordinator().reactToExit();
+        	}
+        });
         addWidgetInGridBagPanel(menuPanel, gridBag, exit, 1, 3, 1, 1,100);
         
         setPanel(menuPanel);

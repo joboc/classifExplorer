@@ -46,11 +46,15 @@ public abstract class GUICoordinator
 		return lblDummy.getFont().getName();
 	}
 	
+	protected GUIGlobalCoordinator getGlobalCoordinator()
+	{
+		return m_globalCoordinator;
+	}
 	protected void setPanel(JPanel panel)
 	{
 		m_panel = panel;
 	}
-	
+
 	private JPanel m_panel;
 	private GUIGlobalCoordinator m_globalCoordinator;
 
