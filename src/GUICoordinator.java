@@ -1,4 +1,7 @@
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.LinkedList;
@@ -9,7 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.Border;
 
 
@@ -39,45 +45,62 @@ public class GUICoordinator
 	private void initializeFrame()
 	{
         guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        guiFrame.setTitle("GridBagLayout Example");
+        guiFrame.setTitle("Classification Explorer");
         guiFrame.setSize(800,800);
         guiFrame.setLocationRelativeTo(null);
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) { // GTK+ pas mal non plus
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {}
         guiFrame.setVisible(true);
 	}
-	private void addWidgetInGridBag(GridBagLayout gridBag, JComponent component, int gridx, int gridy, int gridwidth, int gridheight)
+	private void addWidgetInGridBagPanel(JPanel panel, GridBagLayout gridBag, JComponent component, int gridx, int gridy, int gridwidth, int gridheight, int ipadx)
 	{
         GridBagConstraints cons = new GridBagConstraints();
-        cons.fill = GridBagConstraints.BOTH;
+        cons.fill = GridBagConstraints.CENTER;
         cons.gridx = gridx;
         cons.gridy = gridy;
         cons.gridwidth = gridwidth;
         cons.gridheight = gridheight;
-        gridBag.setConstraints(component, cons);
+        cons.ipadx = ipadx;
+        JPanel localPanel = new JPanel();
+        localPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        localPanel.add(component);
+        //localPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        gridBag.setConstraints(localPanel, cons);
+        panel.add(localPanel);
 	}
 	private JPanel createMenuPanel()
     {
         //creating a border to highlight the component areas
-        Border outline = BorderFactory.createLineBorder(Color.black);
         
         //create GridBagLayout and the GridBagLayout Constraints
-        JPanel menuPanel = new JPanel();
+        JPanel aMenuPanel = new JPanel();
         GridBagLayout gridBag = new GridBagLayout();
-        menuPanel.setLayout(gridBag);
+        aMenuPanel.setLayout(gridBag);
         
-        JLabel titleLbl = new JLabel("Classification Explorer");
-        addWidgetInGridBag(gridBag, titleLbl, 0, 0, 2, 1);
-        menuPanel.add(titleLbl);
+        JLabel titleLbl = new JLabel("Classification");
+        titleLbl.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 36));
+        addWidgetInGridBagPanel(aMenuPanel, gridBag, titleLbl, 0, 0, 2, 1,0);
+
+        JLabel titleLbl2 = new JLabel("Explorer");
+        titleLbl2.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 36));
+        addWidgetInGridBagPanel(aMenuPanel, gridBag, titleLbl2, 0, 1, 2, 1,0);
+
+        JPanel titleLblEmpty = new JPanel();
+        titleLblEmpty.setPreferredSize(new Dimension(10, 70));
+        addWidgetInGridBagPanel(aMenuPanel, gridBag, titleLblEmpty, 0, 2, 2, 1,0);
         
         JButton gotoSearch = new JButton("Recherche d'actes");
-        addWidgetInGridBag(gridBag, gotoSearch, 0, 1, 1, 1);
-        menuPanel.add(gotoSearch);
+        addWidgetInGridBagPanel(aMenuPanel, gridBag, gotoSearch, 0, 3, 1, 1,100);
 
         JButton exit = new JButton("Quitter");
-        addWidgetInGridBag(gridBag, exit, 1, 1, 1, 1);
-        menuPanel.add(exit);
+        addWidgetInGridBagPanel(aMenuPanel, gridBag, exit, 1, 3, 1, 1,100);
 
-        //randomLbl.setBorder(outline);
-        
-        return menuPanel;
+        return aMenuPanel;
     }
 }
