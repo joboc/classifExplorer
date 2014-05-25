@@ -8,12 +8,15 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 public class GUISearchScreenCoordinator extends GUICoordinator
 {
 	private SearchController searchController = new SearchController();
     private JList resultsList;
+    private JTextField txtInput;
 	public GUISearchScreenCoordinator(GUIGlobalCoordinator globalCoordinator)
 	{
 		super(globalCoordinator);
@@ -38,8 +41,9 @@ public class GUISearchScreenCoordinator extends GUICoordinator
         lblSearch.setFont(new Font(getDefaultFontName(), Font.PLAIN, lblSearch.getFont().getSize()));
         addWidgetInGridBagPanel(searchPanel, gridBag, lblSearch, 0, 2, 1, 1,0);
 
-        JTextField txtInput = new JTextField("");
+        txtInput = new JTextField("");
         txtInput.setPreferredSize(new Dimension(400, 30));
+        txtInput.getDocument().addDocumentListener(new TxtInputListener());
         addWidgetInGridBagPanel(searchPanel, gridBag, txtInput, 1, 2, 1, 1,0);
 
         resultsList = new JList();
@@ -51,6 +55,16 @@ public class GUISearchScreenCoordinator extends GUICoordinator
         fillListWithAllLabels();
         
         setPanel(searchPanel);
+	}
+	private class TxtInputListener implements DocumentListener
+	{
+		public void insertUpdate(DocumentEvent e) { reactToTxtInputChange();}
+		public void removeUpdate(DocumentEvent e) { reactToTxtInputChange();}
+		public void changedUpdate(DocumentEvent e) { reactToTxtInputChange();}
+	}
+	private void reactToTxtInputChange()
+	{
+		resultsList.setListData(searchController.getLabelsFilteredByInput(txtInput.getText()));
 	}
 	private void fillListWithAllLabels()
 	{

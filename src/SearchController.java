@@ -18,6 +18,19 @@ public class SearchController {
 		
 		return buildLabelsFromActs(m_displayActs);
 	}
+	public Vector<String> getLabelsFilteredByInput(String input)
+	{
+		m_displayActs.clear();
+		for (Map.Entry<ActCode, ActContent> entry : ActsDataBase.getActsMap().entrySet())
+		{
+			String actLabel = entry.getValue().getLabel();
+			if (actLabel.contains(input))
+				m_displayActs.add(new Act(new ActCode(entry.getKey()), new ActContent(entry.getValue())));
+		}
+		Collections.sort(m_displayActs, new actSorterByLabel());
+		
+		return buildLabelsFromActs(m_displayActs);
+	}
 	private class actSorterByLabel implements Comparator<Act>
 	{
 		public int compare(Act a1, Act a2)
