@@ -12,8 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.Border;
@@ -21,33 +23,36 @@ import javax.swing.border.Border;
 
 public class GUICoordinator
 {
-	private JFrame guiFrame = new JFrame();
-	private JPanel menuPanel;
-	private LinkedList<JPanel> panels = new LinkedList<JPanel>();
+	private JFrame m_guiFrame = new JFrame();
+	private JPanel m_menuPanel;
+	private JPanel m_searchPanel;
+	private LinkedList<JPanel> m_panels = new LinkedList<JPanel>();
 	
 	public GUICoordinator()
 	{
 		initializeFrame();
-		menuPanel = createMenuPanel();
-		panels.add(menuPanel);
-		for (JPanel p : panels){
-			guiFrame.add(p);
-		}
-		switchTo(menuPanel);
+		m_menuPanel = createMenuPanel();
+		m_panels.add(m_menuPanel);
+		m_searchPanel = createSearchPanel();
+		m_panels.add(m_searchPanel);
+
+		switchTo(m_searchPanel);
 	}
 	private void switchTo(JPanel panelToShow)
 	{
-		for (JPanel p : panels){
+		for (JPanel p : m_panels){
+			m_guiFrame.remove(p);
 			p.setVisible(false);
 		}
+		m_guiFrame.add(panelToShow);
 		panelToShow.setVisible(true);
 	}
 	private void initializeFrame()
 	{
-        guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        guiFrame.setTitle("Classification Explorer");
-        guiFrame.setSize(800,800);
-        guiFrame.setLocationRelativeTo(null);
+        m_guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        m_guiFrame.setTitle("Classification Explorer");
+        m_guiFrame.setSize(800,800);
+        m_guiFrame.setLocationRelativeTo(null);
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) { // GTK+ pas mal non plus
@@ -56,7 +61,7 @@ public class GUICoordinator
                 }
             }
         } catch (Exception e) {}
-        guiFrame.setVisible(true);
+        m_guiFrame.setVisible(true);
 	}
 	private void addWidgetInGridBagPanel(JPanel panel, GridBagLayout gridBag, JComponent component, int gridx, int gridy, int gridwidth, int gridheight, int ipadx)
 	{
@@ -74,33 +79,66 @@ public class GUICoordinator
         gridBag.setConstraints(localPanel, cons);
         panel.add(localPanel);
 	}
+	private String getDefaultFontName()
+	{
+		JLabel lblDummy = new JLabel();
+		return lblDummy.getFont().getName();
+	}
 	private JPanel createMenuPanel()
     {
-        //creating a border to highlight the component areas
-        
-        //create GridBagLayout and the GridBagLayout Constraints
-        JPanel aMenuPanel = new JPanel();
+        JPanel menuPanel = new JPanel();
         GridBagLayout gridBag = new GridBagLayout();
-        aMenuPanel.setLayout(gridBag);
+        menuPanel.setLayout(gridBag);
         
         JLabel titleLbl = new JLabel("Classification");
         titleLbl.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 36));
-        addWidgetInGridBagPanel(aMenuPanel, gridBag, titleLbl, 0, 0, 2, 1,0);
+        addWidgetInGridBagPanel(menuPanel, gridBag, titleLbl, 0, 0, 2, 1,0);
 
         JLabel titleLbl2 = new JLabel("Explorer");
         titleLbl2.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 36));
-        addWidgetInGridBagPanel(aMenuPanel, gridBag, titleLbl2, 0, 1, 2, 1,0);
+        addWidgetInGridBagPanel(menuPanel, gridBag, titleLbl2, 0, 1, 2, 1,0);
 
         JPanel titleLblEmpty = new JPanel();
         titleLblEmpty.setPreferredSize(new Dimension(10, 70));
-        addWidgetInGridBagPanel(aMenuPanel, gridBag, titleLblEmpty, 0, 2, 2, 1,0);
+        addWidgetInGridBagPanel(menuPanel, gridBag, titleLblEmpty, 0, 2, 1, 1,0);
         
         JButton gotoSearch = new JButton("Recherche d'actes");
-        addWidgetInGridBagPanel(aMenuPanel, gridBag, gotoSearch, 0, 3, 1, 1,100);
+        addWidgetInGridBagPanel(menuPanel, gridBag, gotoSearch, 0, 3, 1, 1,100);
 
         JButton exit = new JButton("Quitter");
-        addWidgetInGridBagPanel(aMenuPanel, gridBag, exit, 1, 3, 1, 1,100);
+        addWidgetInGridBagPanel(menuPanel, gridBag, exit, 1, 3, 1, 1,100);
 
-        return aMenuPanel;
+        return menuPanel;
     }
+	private JPanel createSearchPanel()
+	{
+		JPanel searchPanel = new JPanel();
+        GridBagLayout gridBag = new GridBagLayout();
+        searchPanel.setLayout(gridBag);
+        
+        JLabel titleLbl = new JLabel("Recherche d'actes");
+        titleLbl.setFont(new Font(getDefaultFontName(), Font.BOLD + Font.ITALIC, 36));
+        titleLbl.setForeground(Color.gray);
+        addWidgetInGridBagPanel(searchPanel, gridBag, titleLbl, 0, 0, 3, 1,0);
+
+        JPanel titleLblEmpty = new JPanel();
+        titleLblEmpty.setPreferredSize(new Dimension(10, 40));
+        addWidgetInGridBagPanel(searchPanel, gridBag, titleLblEmpty, 0, 1, 1, 1,0);
+        
+        JLabel lblSearch = new JLabel("Trouver un acte :");
+        lblSearch.setFont(new Font(getDefaultFontName(), Font.PLAIN, lblSearch.getFont().getSize()));
+        addWidgetInGridBagPanel(searchPanel, gridBag, lblSearch, 0, 2, 1, 1,0);
+
+        JTextField txtInput = new JTextField("");
+        txtInput.setPreferredSize(new Dimension(400, 30));
+        addWidgetInGridBagPanel(searchPanel, gridBag, txtInput, 1, 2, 1, 1,0);
+
+        JList resultsList = new JList();
+        resultsList.setPreferredSize(new Dimension(600, 600));
+        resultsList.setBorder(txtInput.getBorder());
+        addWidgetInGridBagPanel(searchPanel, gridBag, resultsList, 1, 3, 2, 1, 0);
+
+        return searchPanel;
+	}
+
 }
