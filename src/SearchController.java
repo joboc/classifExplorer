@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 public class SearchController {
 	ArrayList<Act> m_displayActs = new ArrayList<Act>();
@@ -24,7 +25,7 @@ public class SearchController {
 		for (Map.Entry<ActCode, ActContent> entry : ActsData.getActsMap().entrySet())
 		{
 			String actLabel = entry.getValue().getLabel();
-			if (actLabel.contains(input))
+			if (Pattern.compile(Pattern.quote(input), Pattern.CASE_INSENSITIVE).matcher(actLabel).find())
 				m_displayActs.add(new Act(new ActCode(entry.getKey()), entry.getValue()));
 		}
 		Collections.sort(m_displayActs, new actSorterByDescendingViewsAscendingLabel());
