@@ -22,11 +22,21 @@ public class SearchController {
 	public Vector<String> getLabelsFilteredByInput(String input)
 	{
 		m_displayActs.clear();
+		String[] inputWords = input.split(" ");
 		for (Map.Entry<ActCode, ActContent> entry : ActsData.getActsMap().entrySet())
 		{
 			String actLabel = entry.getValue().getLabel();
-			if (Pattern.compile(Pattern.quote(input), Pattern.CASE_INSENSITIVE).matcher(actLabel).find())
+			boolean actLabelContainsAllInputWords = true;
+			for (String word : inputWords)
+			{
+				// tous les mots saisis doivent etre dans le label
+				boolean wordFound = Pattern.compile(Pattern.quote(word), Pattern.CASE_INSENSITIVE).matcher(actLabel).find();
+				actLabelContainsAllInputWords = actLabelContainsAllInputWords && wordFound;
+			}
+			if (actLabelContainsAllInputWords)
+			{
 				m_displayActs.add(new Act(new ActCode(entry.getKey()), entry.getValue()));
+			}
 		}
 		Collections.sort(m_displayActs, new actSorterByDescendingViewsAscendingLabel());
 		
@@ -44,6 +54,7 @@ public class SearchController {
 	{
 		return m_displayActs.get(index).getContent().getPrice();
 	}
+
 	private class actSorterByDescendingViewsAscendingLabel implements Comparator<Act>
 	{
 		public int compare(Act a1, Act a2)
