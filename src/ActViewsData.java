@@ -48,6 +48,7 @@ public class ActViewsData {
 	        Document xmlRequest = docBuilder.newDocument();
 
             Element actViewsDataNode = xmlRequest.createElement("actViewsData");
+            actViewsDataNode.setAttribute("version", "1.0");
             xmlRequest.appendChild(actViewsDataNode);
 	        for (Map.Entry<ActCode, Integer> entry : entries.entrySet())
 	        {
