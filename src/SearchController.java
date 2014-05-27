@@ -10,26 +10,30 @@ public class SearchController {
 	public Vector<String> getAllLabels()
 	{
 		m_displayActs.clear();
-		for (Map.Entry<ActCode, ActContent> entry : ActsDataBase.getActsMap().entrySet())
+		for (Map.Entry<ActCode, ActContent> entry : ActsData.getActsMap().entrySet())
 		{
-			m_displayActs.add(new Act(new ActCode(entry.getKey()), new ActContent(entry.getValue())));
+			m_displayActs.add(new Act(new ActCode(entry.getKey()), entry.getValue()));
 		}
-		Collections.sort(m_displayActs, new actSorterByLabel());
+		Collections.sort(m_displayActs, new actSorterByDescendingViewsAscendingLabel());
 		
 		return buildLabelsFromActs(m_displayActs);
 	}
 	public Vector<String> getLabelsFilteredByInput(String input)
 	{
 		m_displayActs.clear();
-		for (Map.Entry<ActCode, ActContent> entry : ActsDataBase.getActsMap().entrySet())
+		for (Map.Entry<ActCode, ActContent> entry : ActsData.getActsMap().entrySet())
 		{
 			String actLabel = entry.getValue().getLabel();
 			if (actLabel.contains(input))
-				m_displayActs.add(new Act(new ActCode(entry.getKey()), new ActContent(entry.getValue())));
+				m_displayActs.add(new Act(new ActCode(entry.getKey()), entry.getValue()));
 		}
-		Collections.sort(m_displayActs, new actSorterByLabel());
+		Collections.sort(m_displayActs, new actSorterByDescendingViewsAscendingLabel());
 		
 		return buildLabelsFromActs(m_displayActs);
+	}
+	public void reactToSelection(int index)
+	{
+		m_displayActs.get(index).getContent().IncrementTimesViewed();
 	}
 	public String getCodeAt(int index)
 	{
@@ -39,11 +43,16 @@ public class SearchController {
 	{
 		return m_displayActs.get(index).getContent().getPrice();
 	}
-	private class actSorterByLabel implements Comparator<Act>
+	private class actSorterByDescendingViewsAscendingLabel implements Comparator<Act>
 	{
 		public int compare(Act a1, Act a2)
 		{
-			return a1.getContent().getLabel().compareTo(a2.getContent().getLabel());
+			int comp = -1 * Integer.valueOf(a1.getContent().getTimesViewed()).compareTo(a2.getContent().getTimesViewed());
+			if (comp == 0)
+			{
+				comp = a1.getContent().getLabel().compareTo(a2.getContent().getLabel());
+			}
+			return comp;
 		}
 	}
 	private Vector<String> buildLabelsFromActs(ArrayList<Act> acts)

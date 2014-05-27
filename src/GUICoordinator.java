@@ -10,6 +10,10 @@ import javax.swing.JPanel;
 
 public abstract class GUICoordinator
 {	
+	public GUICoordinator(GUIGlobalCoordinator globalCoordinator) {
+		m_globalCoordinator = globalCoordinator;
+	}
+	
 	public void activate(JFrame frame)
 	{
 		frame.add(m_panel);
@@ -19,9 +23,9 @@ public abstract class GUICoordinator
 	{
 		frame.remove(m_panel);
 	}
-	
-	public GUICoordinator(GUIGlobalCoordinator globalCoordinator) {
-		m_globalCoordinator = globalCoordinator;
+	public void onExit()
+	{
+		
 	}
 	
 	protected void addWidgetInGridBagPanel(JPanel panel, GridBagLayout gridBag, JComponent component, int gridx, int gridy, int gridwidth, int gridheight, int ipadx)

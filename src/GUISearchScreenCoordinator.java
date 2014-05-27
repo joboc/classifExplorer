@@ -72,6 +72,11 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 		super.activate(frame);
 		txtInput.requestFocus();
 	}
+	public void onExit()
+	{
+		super.onExit();
+		ActsData.save();
+	}
 	private class TxtInputListener implements DocumentListener
 	{
 		public void insertUpdate(DocumentEvent e) { reactToTxtInputChange();}
@@ -88,6 +93,7 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 	}
 	private void reactToListSelection()
 	{
+		searchController.reactToSelection(resultsList.getSelectedIndex());
 		String code = searchController.getCodeAt(resultsList.getSelectedIndex());
 		double price = searchController.getPriceAt(resultsList.getSelectedIndex());
 		String displayPrice = price != 0.0 ? Double.toString(price) + "€" : "Non pris en charge";

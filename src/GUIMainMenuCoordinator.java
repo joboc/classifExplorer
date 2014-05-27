@@ -44,7 +44,7 @@ public class GUIMainMenuCoordinator extends GUICoordinator {
         JButton exit = new JButton("Quitter");
         exit.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e){
-        		getGlobalCoordinator().reactToExit();
+        		getGlobalCoordinator().reactToExitButton();
         	}
         });
         addWidgetInGridBagPanel(menuPanel, gridBag, exit, 1, 3, 1, 1,100);
