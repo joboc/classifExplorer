@@ -10,23 +10,40 @@ import java.io.OutputStream;
 public class FileManager {
 	public static InputStream getActViewsFileInput() throws FileNotFoundException, IOException
 	{
-		File actViewsFile = new File(getResourceDirectoryName() + "actViews");
+		return getFileInput(ACT_VIEWS_FILE_NAME);
+	}
+	public static OutputStream getActViewsFileOutput() throws FileNotFoundException
+	{
+		return getFileOutput(ACT_VIEWS_FILE_NAME);
+	}
+	public static InputStream getAccountingFileInput() throws FileNotFoundException, IOException
+	{
+		return getFileInput(ACCOUNTING_FILE_NAME);
+	}
+	public static OutputStream getAccountingFileOutput() throws FileNotFoundException
+	{
+		return getFileOutput(ACCOUNTING_FILE_NAME);
+	}
+	
+	private static InputStream getFileInput(String fileName) throws FileNotFoundException, IOException
+	{
+		File actViewsFile = new File(getResourceDirectoryName() + fileName);
 		if (actViewsFile.exists())
 		{
-			return new FileInputStream(getResourceDirectoryName() + "actViews");
+			return new FileInputStream(getResourceDirectoryName() + fileName);
 		}
 		else
 		{
 			byte emptyData[] = {};
-			FileOutputStream out = new FileOutputStream(getResourceDirectoryName() + "actViews");
+			FileOutputStream out = new FileOutputStream(getResourceDirectoryName() + fileName);
 			out.write(emptyData);
 			out.close();
-			return new FileInputStream(getResourceDirectoryName() + "actViews");
+			return new FileInputStream(getResourceDirectoryName() + fileName);
 		}
 	}
-	public static OutputStream getActViewsFileOutput() throws FileNotFoundException
+	private static OutputStream getFileOutput(String fileName) throws FileNotFoundException
 	{
-		return new FileOutputStream(getResourceDirectoryName() + "actViews");
+		return new FileOutputStream(getResourceDirectoryName() + fileName);
 	}
 	static private String getResourceDirectoryName()
 	{
@@ -46,4 +63,6 @@ public class FileManager {
    		resourceDirectory.mkdir();
    		return resourceDirectoryName;
 	}
+	static String ACT_VIEWS_FILE_NAME = "actViews";
+	static String ACCOUNTING_FILE_NAME = "accounting";
 }

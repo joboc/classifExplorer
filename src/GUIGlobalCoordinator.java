@@ -11,6 +11,7 @@ public class GUIGlobalCoordinator {
 	ArrayList<GUICoordinator> m_coordinators = new ArrayList<GUICoordinator>();
 	GUICoordinator m_mainMenuCoordinator;
 	GUICoordinator m_searchScreenCoordinator;
+	GUICoordinator m_repartitionScreenCoordinator;
 	public GUIGlobalCoordinator()
 	{
 		initializeFrame();
@@ -18,12 +19,18 @@ public class GUIGlobalCoordinator {
 		m_coordinators.add(m_mainMenuCoordinator);
 		m_searchScreenCoordinator = new GUISearchScreenCoordinator(this);
 		m_coordinators.add(m_searchScreenCoordinator);
+		m_repartitionScreenCoordinator = new GUIRepartitionScreenCoordinator(this);
+		m_coordinators.add(m_repartitionScreenCoordinator);
 		
 		switchTo(m_mainMenuCoordinator);
 	}
 	public void reactToMainMenuGotoSearch()
 	{
 		switchTo(m_searchScreenCoordinator);
+	}
+	public void reactToMainMenuGotoRepartition()
+	{
+		switchTo(m_repartitionScreenCoordinator);
 	}
 	public void reactToExitButton()
 	{

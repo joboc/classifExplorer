@@ -1,7 +1,9 @@
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,7 +42,7 @@ public abstract class GUICoordinator
         JPanel localPanel = new JPanel();
         localPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         localPanel.add(component);
-        //localPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+//      localPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         gridBag.setConstraints(localPanel, cons);
         panel.add(localPanel);
 	}
