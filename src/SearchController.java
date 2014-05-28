@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Vector;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SearchController {
@@ -40,7 +42,7 @@ public class SearchController {
 		}
 		Collections.sort(m_displayActs, new actSorterByDescendingViewsAscendingLabel());
 		
-		return buildLabelsFromActs(m_displayActs);
+		return buildLabelsFromActsWithInputs(m_displayActs, inputWords);
 	}
 	public void reactToSelection(int index)
 	{
@@ -70,10 +72,38 @@ public class SearchController {
 	private Vector<String> buildLabelsFromActs(ArrayList<Act> acts)
 	{
 		Vector<String> displayLabels = new Vector<String>();
-		for (Act e : acts)
+		for (Act act : acts)
 		{
-			displayLabels.add(e.getContent().getLabel());
+			String displayLabel = new String(act.getContent().getLabel());
+			displayLabel = addViewedColorToLabel(displayLabel, act.getContent().getTimesViewed());
+			displayLabels.add(displayLabel);
 		}
 		return displayLabels;
+	}
+	private Vector<String> buildLabelsFromActsWithInputs(ArrayList<Act> acts, String[] inputWords)
+	{
+		Vector<String> displayLabels = new Vector<String>();
+		for (Act act : acts)
+		{
+			String displayLabel = new String(act.getContent().getLabel());
+			displayLabel = addViewedColorToLabel(displayLabel, act.getContent().getTimesViewed());
+			displayLabels.add(displayLabel);
+		}
+		return displayLabels;
+	}
+	private String addViewedColorToLabel(String label, int timesViewed)
+	{
+		StringBuilder sb = new StringBuilder(label);
+		if (timesViewed > 0)
+		{
+			sb.insert(label.length(), "</font>");
+			sb.insert(0, "<font color=blue>");
+		}
+		String labelWithoutHtml = sb.toString();
+		sb = new StringBuilder(labelWithoutHtml);
+		sb.insert(labelWithoutHtml.length(), "</html>");
+		sb.insert(0, "<html>");
+
+		return sb.toString();
 	}
 }
