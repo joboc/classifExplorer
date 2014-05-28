@@ -85,11 +85,51 @@ public class SearchController {
 		Vector<String> displayLabels = new Vector<String>();
 		for (Act act : acts)
 		{
+			ArrayList<Interval> matchIntervals = new ArrayList<Interval>();
+			for (String word : inputWords)
+			{
+				Pattern wordPattern = Pattern.compile(word, Pattern.CASE_INSENSITIVE);
+				String actLabel = act.getContent().getLabel();
+				Matcher wordMatcher = wordPattern.matcher(actLabel);
+				while (wordMatcher.find())
+				{
+					matchIntervals.add(new Interval(wordMatcher.start(), wordMatcher.end()));
+				}
+			}
+			mergeIntervals(matchIntervals);
 			String displayLabel = new String(act.getContent().getLabel());
+			displayLabel = addMatchColorToLabel(displayLabel, matchIntervals);
 			displayLabel = addViewedColorToLabel(displayLabel, act.getContent().getTimesViewed());
 			displayLabels.add(displayLabel);
 		}
 		return displayLabels;
+	}
+	private void mergeIntervals(ArrayList<Interval> intervals)
+	{
+		Collections.sort(intervals);
+		ArrayList<Interval> intervalsToRemove = new ArrayList<Interval>();
+		int i = 0;
+		while (i < intervals.size())
+		{
+			Interval initialInterval = intervals.get(i); 
+			boolean disjoint = false;
+			while (!disjoint && i < intervals.size() - 1)
+			{
+				++i;
+				Interval currentInterval = intervals.get(i);
+				if (currentInterval.start <= initialInterval.end)
+				{
+					initialInterval.end = Math.max(initialInterval.end, currentInterval.end);
+					intervalsToRemove.add(currentInterval);
+				}
+				else
+				{
+					disjoint = true;
+				}
+			}
+			++i;
+		}
+		intervals.removeAll(intervalsToRemove);
 	}
 	private String addViewedColorToLabel(String label, int timesViewed)
 	{
@@ -105,5 +145,40 @@ public class SearchController {
 		sb.insert(0, "<html>");
 
 		return sb.toString();
+	}
+	private String addMatchColorToLabel(String label, ArrayList<Interval> matches)
+	{
+		String coloredLabel = null;
+		if (matches.size() > 0)
+		{
+			ListIterator<Interval> it = matches.listIterator(matches.size()); // reverse iteration
+			StringBuilder sb = new StringBuilder(label);
+			while (it.hasPrevious())
+			{
+				Interval matchInterval = it.previous(); 
+				sb.insert(matchInterval.end, "</font>");
+				sb.insert(matchInterval.start, "<font color=red>");
+			}
+			coloredLabel = sb.toString();
+		}
+		else
+		{
+			coloredLabel = new String(label);
+		}
+		return coloredLabel;
+	}
+	private class Interval implements Comparable<Interval>
+	{
+		public int start;
+		public int end;
+		public Interval(int start, int end)
+		{
+			this.start = start;
+			this.end = end;
+		}
+		public int compareTo(Interval other)
+		{
+			return Integer.valueOf(start).compareTo(other.start);
+		}
 	}
 }
