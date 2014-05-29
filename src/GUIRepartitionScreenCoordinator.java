@@ -59,6 +59,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
 
         honorairesTxt = new JTextField();
         honorairesTxt.setPreferredSize(txtFieldsDimension);
+        honorairesTxt.getDocument().addDocumentListener(new TxtInputListener());
         AbstractDocument honorairesTxtDoc = (AbstractDocument)achatTxt.getDocument();
         honorairesTxtDoc.setDocumentFilter(new NumbersFilter());
         addWidgetInGridBagPanel(repartitionPanel, gridBag, honorairesTxt, 1, formOffset + 1, 1, 1,0);
@@ -69,7 +70,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         pourcentageStructureTxt = new JTextField();
         pourcentageStructureTxt.setPreferredSize(txtFieldsDimension);
         pourcentageStructureTxt.setEditable(false);
-        AbstractDocument percentageStructureTxtDoc = (AbstractDocument)achatTxt.getDocument();
+        AbstractDocument percentageStructureTxtDoc = (AbstractDocument)pourcentageStructureTxt.getDocument();
         percentageStructureTxtDoc.setDocumentFilter(new NumbersFilter());
         addWidgetInGridBagPanel(repartitionPanel, gridBag, pourcentageStructureTxt, 1, formOffset + 2, 1, 1,0);
 
@@ -123,7 +124,6 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         chargesStructureValueLbl.setPreferredSize(lblFieldsDimension);
         addWidgetInGridBagPanel(repartitionPanel, gridBag, chargesStructureValueLbl, 1, formOffset + 7, 1, 1,0);
 
-        repartitionController.setPourcentageStructure(25);
         pourcentageStructureTxt.setText(Double.valueOf(repartitionController.getPourcentageStructure()).toString());
         setPanel(repartitionPanel);
 	}
