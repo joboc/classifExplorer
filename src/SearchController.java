@@ -3,33 +3,32 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SearchController {
-	ArrayList<Act> m_displayActs = new ArrayList<Act>();
+	private ArrayList<Act> m_displayActs = new ArrayList<Act>();
+	private String[] m_filterWords;
 	
-	public Vector<String> getAllLabels()
+	public void queryAllLabels()
 	{
 		m_displayActs.clear();
+		m_filterWords = null;
 		for (Map.Entry<ActCode, ActContent> entry : ActsData.getActsMap().entrySet())
 		{
 			m_displayActs.add(new Act(new ActCode(entry.getKey()), entry.getValue()));
 		}
 		Collections.sort(m_displayActs, new actSorterByDescendingViewsAscendingLabel());
-		
-		return buildLabelsFromActs(m_displayActs);
 	}
-	public Vector<String> getLabelsFilteredByInput(String input)
+	public void queryLabelsFilteredByInput(String input)
 	{
 		m_displayActs.clear();
-		String[] inputWords = input.split(" ");
+		m_filterWords = input.split(" ");
 		for (Map.Entry<ActCode, ActContent> entry : ActsData.getActsMap().entrySet())
 		{
 			String actLabel = entry.getValue().getLabel();
 			boolean actLabelContainsAllInputWords = true;
-			for (String word : inputWords)
+			for (String word : m_filterWords)
 			{
 				// tous les mots saisis doivent etre dans le label
 				boolean wordFound = Pattern.compile(Pattern.quote(word), Pattern.CASE_INSENSITIVE).matcher(actLabel).find();
@@ -41,8 +40,22 @@ public class SearchController {
 			}
 		}
 		Collections.sort(m_displayActs, new actSorterByDescendingViewsAscendingLabel());
-		
-		return buildLabelsFromActsWithInputs(m_displayActs, inputWords);
+	}
+	public String getDisplayLabel(int index)
+	{
+		Act act = m_displayActs.get(index);
+		String displayLabel = new String(act.getContent().getLabel());
+		if (m_filterWords != null)
+		{
+			ArrayList<Interval> matchIntervals = computeMatchIntervals(act.getContent().getLabel(), m_filterWords);
+			displayLabel = addMatchColorToLabel(displayLabel, matchIntervals);
+		}
+		displayLabel = addViewedColorToLabel(displayLabel, act.getContent().getTimesViewed());
+		return displayLabel;
+	}
+	public int getNumberOfDisplayLabels()
+	{
+		return m_displayActs.size();
 	}
 	public void reactToSelection(int index)
 	{
@@ -69,40 +82,20 @@ public class SearchController {
 			return comp;
 		}
 	}
-	private Vector<String> buildLabelsFromActs(ArrayList<Act> acts)
+	private ArrayList<Interval> computeMatchIntervals(String target, String[] matchWords)
 	{
-		Vector<String> displayLabels = new Vector<String>();
-		for (Act act : acts)
+		ArrayList<Interval> matchIntervals = new ArrayList<Interval>();
+		for (String word : matchWords)
 		{
-			String displayLabel = new String(act.getContent().getLabel());
-			displayLabel = addViewedColorToLabel(displayLabel, act.getContent().getTimesViewed());
-			displayLabels.add(displayLabel);
-		}
-		return displayLabels;
-	}
-	private Vector<String> buildLabelsFromActsWithInputs(ArrayList<Act> acts, String[] inputWords)
-	{
-		Vector<String> displayLabels = new Vector<String>();
-		for (Act act : acts)
-		{
-			ArrayList<Interval> matchIntervals = new ArrayList<Interval>();
-			for (String word : inputWords)
+			Pattern wordPattern = Pattern.compile(word, Pattern.CASE_INSENSITIVE);
+			Matcher wordMatcher = wordPattern.matcher(target);
+			while (wordMatcher.find())
 			{
-				Pattern wordPattern = Pattern.compile(word, Pattern.CASE_INSENSITIVE);
-				String actLabel = act.getContent().getLabel();
-				Matcher wordMatcher = wordPattern.matcher(actLabel);
-				while (wordMatcher.find())
-				{
-					matchIntervals.add(new Interval(wordMatcher.start(), wordMatcher.end()));
-				}
+				matchIntervals.add(new Interval(wordMatcher.start(), wordMatcher.end()));
 			}
-			mergeIntervals(matchIntervals);
-			String displayLabel = new String(act.getContent().getLabel());
-			displayLabel = addMatchColorToLabel(displayLabel, matchIntervals);
-			displayLabel = addViewedColorToLabel(displayLabel, act.getContent().getTimesViewed());
-			displayLabels.add(displayLabel);
 		}
-		return displayLabels;
+		mergeIntervals(matchIntervals);
+		return matchIntervals;
 	}
 	private void mergeIntervals(ArrayList<Interval> intervals)
 	{

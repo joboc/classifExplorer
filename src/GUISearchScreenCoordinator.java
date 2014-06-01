@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -52,6 +53,16 @@ public class GUISearchScreenCoordinator extends GUICoordinator
         addWidgetInGridBagPanel(searchPanel, gridBag, txtInput, 1, 2, 1, 1,0);
 
         resultsList = new JList();
+        resultsList.setModel(new AbstractListModel(){
+			public int getSize()
+			{
+				return searchController.getNumberOfDisplayLabels();
+			}
+			public Object getElementAt(int index)
+			{
+				return searchController.getDisplayLabel(index);
+			}
+		});
         resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         resultsList.addMouseListener(new MouseAdapter(){
         	public void mouseClicked(MouseEvent e){
@@ -85,11 +96,15 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 	}
 	private void fillListWithAllLabels()
 	{
-		resultsList.setListData(searchController.getAllLabels());
+		searchController.queryAllLabels();
+		resultsList.revalidate();
+		resultsList.repaint();
 	}
 	private void reactToTxtInputChange()
 	{
-		resultsList.setListData(searchController.getLabelsFilteredByInput(txtInput.getText()));
+		searchController.queryLabelsFilteredByInput(txtInput.getText());
+		resultsList.revalidate();
+		resultsList.repaint();
 	}
 	private void reactToListSelection()
 	{
