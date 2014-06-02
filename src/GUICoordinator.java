@@ -98,7 +98,7 @@ public abstract class GUICoordinator
         buttonPanel.add(backToMainMenu);
 
         panel.add(paddedTitlePanel, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.EAST);
+        panel.add(buttonPanel, BorderLayout.WEST);
         return panel;
 	}
 
