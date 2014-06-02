@@ -1,9 +1,15 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,6 +26,7 @@ public abstract class GUICoordinator
 	{
 		frame.add(m_panel);
 		m_panel.revalidate();
+		m_panel.repaint();
 	}
 	public void inactivate(JFrame frame)
 	{
@@ -59,6 +66,40 @@ public abstract class GUICoordinator
 	protected void setPanel(JPanel panel)
 	{
 		m_panel = panel;
+	}
+	protected JPanel createStandardHeaderPanel(String screenTitle)
+	{
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        
+        JLabel titleLabel = new JLabel(screenTitle);
+        titleLabel.setFont(new Font(getDefaultFontName(), Font.BOLD + Font.ITALIC, 36));
+        titleLabel.setForeground(Color.gray);
+        JPanel titlePanel = new JPanel();
+        titlePanel.add(titleLabel);
+
+//        JLabel paddingLabel = new JLabel();
+//        paddingLabel.setPreferredSize(new Dimension(10,20));
+        JPanel paddingPanel = new JPanel();
+//        paddingPanel.add(paddingLabel);
+
+        JPanel paddedTitlePanel = new JPanel();
+        paddedTitlePanel.setLayout(new BorderLayout());
+        paddedTitlePanel.add(paddingPanel, BorderLayout.NORTH);
+        paddedTitlePanel.add(titlePanel, BorderLayout.CENTER);
+
+        JButton backToMainMenu = new JButton("<html>&#8592 Retour au<br>menu principal</html>");
+        backToMainMenu.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e){
+        		getGlobalCoordinator().reactToBackToMainMenu();
+        	}
+        });
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(backToMainMenu);
+
+        panel.add(paddedTitlePanel, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.EAST);
+        return panel;
 	}
 
 	private JPanel m_panel;

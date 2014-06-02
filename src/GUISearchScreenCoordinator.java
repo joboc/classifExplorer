@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -6,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -31,32 +33,29 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 	}
 	public void initialize()
 	{
-		JPanel searchPanel = new JPanel();
-        GridBagLayout gridBag = new GridBagLayout();
-        searchPanel.setLayout(gridBag);
-        
-        JLabel titleLbl = new JLabel("Recherche d'actes");
-        titleLbl.setFont(new Font(getDefaultFontName(), Font.BOLD + Font.ITALIC, 36));
-        titleLbl.setForeground(Color.gray);
-        addWidgetInGridBagPanel(searchPanel, gridBag, titleLbl, 0, 0, 3, 1,0);
+        JPanel headerPanel = createStandardHeaderPanel("Recherche d'actes");
 
+		JPanel mainPanel = new JPanel();
+        GridBagLayout gridBag = new GridBagLayout();
+        mainPanel.setLayout(gridBag);
+        
         JPanel titleLblEmpty = new JPanel();
         titleLblEmpty.setPreferredSize(new Dimension(10, 40));
-        addWidgetInGridBagPanel(searchPanel, gridBag, titleLblEmpty, 0, 1, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, titleLblEmpty, 0, 1, 1, 1,0);
         
         JLabel lblSearch = new JLabel("Trouver un acte :");
         lblSearch.setFont(new Font(getDefaultFontName(), Font.PLAIN, lblSearch.getFont().getSize()));
-        addWidgetInGridBagPanel(searchPanel, gridBag, lblSearch, 0, 2, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, lblSearch, 0, 2, 1, 1,0);
 
         txtInput = new JTextField("");
         txtInput.setPreferredSize(new Dimension(400, 30));
         txtInput.getDocument().addDocumentListener(new TxtInputListener());
-        addWidgetInGridBagPanel(searchPanel, gridBag, txtInput, 1, 2, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, txtInput, 1, 2, 1, 1,0);
 
         lblNbActsFound = new JLabel("actes trouvés");
         lblNbActsFound.setPreferredSize(new Dimension(475, 30));
         lblNbActsFound.setFont(new Font(getDefaultFontName(), Font.PLAIN, lblSearch.getFont().getSize()));
-        addWidgetInGridBagPanel(searchPanel, gridBag, lblNbActsFound, 2, 2, 1, 1, 0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, lblNbActsFound, 2, 2, 1, 1, 0);
 
         resultsList = new JList();
         resultsList.setModel(new AbstractListModel(){
@@ -78,11 +77,15 @@ public class GUISearchScreenCoordinator extends GUICoordinator
         JScrollPane resultsListScrollPane = new JScrollPane(resultsList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         resultsListScrollPane.setPreferredSize(new Dimension(900, 600));
         resultsListScrollPane.setBorder(txtInput.getBorder());
-        addWidgetInGridBagPanel(searchPanel, gridBag, resultsListScrollPane, 1, 3, 2, 1, 0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, resultsListScrollPane, 1, 3, 2, 1, 0);
 
         fillListWithAllLabels();
         
-        setPanel(searchPanel);
+        JPanel globalPanel = new JPanel();
+        globalPanel.setLayout(new BorderLayout());
+        globalPanel.add(headerPanel, BorderLayout.NORTH);
+        globalPanel.add(mainPanel, BorderLayout.CENTER);
+        setPanel(globalPanel);
 	}
 	public void activate(JFrame frame)
 	{

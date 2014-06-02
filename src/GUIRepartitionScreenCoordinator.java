@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -38,41 +39,43 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
 	}
 	private void initialize()
 	{
-        JPanel repartitionPanel = new JPanel();
+		JPanel headerPanel = createStandardHeaderPanel("Répartition des frais");
+		
+        JPanel mainPanel = new JPanel();
         GridBagLayout gridBag = new GridBagLayout();
-        repartitionPanel.setLayout(gridBag);
+        mainPanel.setLayout(gridBag);
         Dimension txtFieldsDimension = new Dimension(70, 30);
         
         int formOffset = 0;
         JLabel achatLbl = new JLabel("Prix d'achat payé au fournisseur :");
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, achatLbl, 0, formOffset + 0, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, achatLbl, 0, formOffset + 0, 1, 1,0);
 
         achatTxt = new JTextField();
         achatTxt.setPreferredSize(txtFieldsDimension);
         achatTxt.getDocument().addDocumentListener(new TxtInputListener());
         AbstractDocument achatTxtDoc = (AbstractDocument)achatTxt.getDocument();
         achatTxtDoc.setDocumentFilter(new NumbersFilter());
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, achatTxt, 1, formOffset + 0, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, achatTxt, 1, formOffset + 0, 1, 1,0);
 
         JLabel honorairesLbl = new JLabel("Honoraires payés par le patient :");
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, honorairesLbl, 0, formOffset + 1, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, honorairesLbl, 0, formOffset + 1, 1, 1,0);
 
         honorairesTxt = new JTextField();
         honorairesTxt.setPreferredSize(txtFieldsDimension);
         honorairesTxt.getDocument().addDocumentListener(new TxtInputListener());
         AbstractDocument honorairesTxtDoc = (AbstractDocument)achatTxt.getDocument();
         honorairesTxtDoc.setDocumentFilter(new NumbersFilter());
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, honorairesTxt, 1, formOffset + 1, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, honorairesTxt, 1, formOffset + 1, 1, 1,0);
 
         JLabel pourcentageStructureLbl = new JLabel("% de coûts de structure :");
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, pourcentageStructureLbl, 0, formOffset + 2, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, pourcentageStructureLbl, 0, formOffset + 2, 1, 1,0);
 
         pourcentageStructureTxt = new JTextField();
         pourcentageStructureTxt.setPreferredSize(txtFieldsDimension);
         pourcentageStructureTxt.setEditable(false);
         AbstractDocument percentageStructureTxtDoc = (AbstractDocument)pourcentageStructureTxt.getDocument();
         percentageStructureTxtDoc.setDocumentFilter(new NumbersFilter());
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, pourcentageStructureTxt, 1, formOffset + 2, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, pourcentageStructureTxt, 1, formOffset + 2, 1, 1,0);
 
         changePourcentageStructureBtn = new JButton(CHANGE_POURCENTAGE_STRUCTURE_BUTTON_LABEL);
         changePourcentageStructureBtn.addActionListener(new ActionListener(){
@@ -85,7 +88,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         			reactToValidatePourcentageStructureButton();
         	}
         });
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, changePourcentageStructureBtn, 2, formOffset + 2, 1, 1, 0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, changePourcentageStructureBtn, 2, formOffset + 2, 1, 1, 0);
         
         computeBtn = new JButton("Calculer la répartition");
         computeBtn.addActionListener(new ActionListener(){
@@ -93,39 +96,44 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         		reactToComputeButton();
         	}
         });
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, computeBtn, 0, formOffset + 3, 2, 1,100);
+        addWidgetInGridBagPanel(mainPanel, gridBag, computeBtn, 0, formOffset + 3, 2, 1,100);
 
         Dimension lblFieldsDimension = new Dimension(70, 30);
         JPanel lblEmpty = new JPanel();
         lblEmpty.setPreferredSize(new Dimension(10, 50));
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, lblEmpty, 0, formOffset + 4, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, lblEmpty, 0, formOffset + 4, 1, 1,0);
 
         JLabel prixDispositifTitleLbl = new JLabel("Prix de vente du dispositif médical :");
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, prixDispositifTitleLbl, 0, formOffset + 5, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, prixDispositifTitleLbl, 0, formOffset + 5, 1, 1,0);
 
         prixDispositifValueLbl = new JLabel();
         prixDispositifValueLbl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         prixDispositifValueLbl.setPreferredSize(lblFieldsDimension);
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, prixDispositifValueLbl, 1, formOffset + 5, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, prixDispositifValueLbl, 1, formOffset + 5, 1, 1,0);
 
         JLabel prestationSoinsTitleLbl = new JLabel("Montant des prestations de soins :");
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, prestationSoinsTitleLbl, 0, formOffset + 6, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, prestationSoinsTitleLbl, 0, formOffset + 6, 1, 1,0);
 
         prestationSoinsValueLbl = new JLabel();
         prestationSoinsValueLbl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         prestationSoinsValueLbl.setPreferredSize(lblFieldsDimension);
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, prestationSoinsValueLbl, 1, formOffset + 6, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, prestationSoinsValueLbl, 1, formOffset + 6, 1, 1,0);
 
         JLabel chargesStructureTitleLbl = new JLabel("Charges de structure :");
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, chargesStructureTitleLbl, 0, formOffset + 7, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, chargesStructureTitleLbl, 0, formOffset + 7, 1, 1,0);
 
         chargesStructureValueLbl = new JLabel();
         chargesStructureValueLbl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         chargesStructureValueLbl.setPreferredSize(lblFieldsDimension);
-        addWidgetInGridBagPanel(repartitionPanel, gridBag, chargesStructureValueLbl, 1, formOffset + 7, 1, 1,0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, chargesStructureValueLbl, 1, formOffset + 7, 1, 1,0);
 
         pourcentageStructureTxt.setText(Double.valueOf(repartitionController.getPourcentageStructure()).toString());
-        setPanel(repartitionPanel);
+        
+        JPanel globalPanel = new JPanel();
+        globalPanel.setLayout(new BorderLayout());
+        globalPanel.add(headerPanel, BorderLayout.NORTH);
+        globalPanel.add(mainPanel, BorderLayout.CENTER);
+        setPanel(globalPanel);
 	}
 	public void activate(JFrame frame)
 	{

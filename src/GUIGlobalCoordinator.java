@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -34,7 +35,15 @@ public class GUIGlobalCoordinator {
 	}
 	public void reactToExitButton()
 	{
-		System.exit(0);
+		int answer = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir quitter ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+		if (answer == JOptionPane.YES_OPTION)
+		{
+			System.exit(0);
+		}
+	}
+	public void reactToBackToMainMenu()
+	{
+		switchTo(m_mainMenuCoordinator);
 	}
 	private void reactToApplicationClose()
 	{
