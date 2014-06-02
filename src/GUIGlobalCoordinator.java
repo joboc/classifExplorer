@@ -1,3 +1,5 @@
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -33,7 +35,7 @@ public class GUIGlobalCoordinator {
 	{
 		switchTo(m_repartitionScreenCoordinator);
 	}
-	public void reactToExitButton()
+	public void reactToExitCommand()
 	{
 		int answer = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir quitter ?", "Confirmation", JOptionPane.YES_NO_OPTION);
 		if (answer == JOptionPane.YES_OPTION)
@@ -62,10 +64,15 @@ public class GUIGlobalCoordinator {
 	
 	private void initializeFrame()
 	{
-        m_guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         m_guiFrame.setTitle("Classification Explorer");
         m_guiFrame.setSize(1100,800);
         m_guiFrame.setLocationRelativeTo(null);
+        m_guiFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        m_guiFrame.addWindowListener(new WindowAdapter(){
+        	public void windowClosing(WindowEvent evt){
+        		reactToExitCommand();
+        	}
+        });
         Runtime.getRuntime().addShutdownHook(new ShutdownHook());
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
