@@ -57,6 +57,9 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         achatTxtDoc.setDocumentFilter(new NumbersFilter());
         addWidgetInGridBagPanel(mainPanel, gridBag, achatTxt, 1, formOffset + 0, 1, 1,0);
 
+        JLabel achatUnit = new JLabel("€");
+        addWidgetInGridBagPanel(mainPanel, gridBag, achatUnit, 2, formOffset + 0, 1, 1,0);
+
         JLabel honorairesLbl = new JLabel("Honoraires payés par le patient :");
         addWidgetInGridBagPanel(mainPanel, gridBag, honorairesLbl, 0, formOffset + 1, 1, 1,0);
 
@@ -67,6 +70,9 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         honorairesTxtDoc.setDocumentFilter(new NumbersFilter());
         addWidgetInGridBagPanel(mainPanel, gridBag, honorairesTxt, 1, formOffset + 1, 1, 1,0);
 
+        JLabel honorairesUnit = new JLabel("€");
+        addWidgetInGridBagPanel(mainPanel, gridBag, honorairesUnit, 2, formOffset + 1, 1, 1,0);
+
         JLabel pourcentageStructureLbl = new JLabel("% de coûts de structure :");
         addWidgetInGridBagPanel(mainPanel, gridBag, pourcentageStructureLbl, 0, formOffset + 2, 1, 1,0);
 
@@ -76,6 +82,9 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         AbstractDocument percentageStructureTxtDoc = (AbstractDocument)pourcentageStructureTxt.getDocument();
         percentageStructureTxtDoc.setDocumentFilter(new NumbersFilter());
         addWidgetInGridBagPanel(mainPanel, gridBag, pourcentageStructureTxt, 1, formOffset + 2, 1, 1,0);
+
+        JLabel pourcentageStructureUnit = new JLabel("%");
+        addWidgetInGridBagPanel(mainPanel, gridBag, pourcentageStructureUnit, 2, formOffset + 2, 1, 1,0);
 
         changePourcentageStructureBtn = new JButton(CHANGE_POURCENTAGE_STRUCTURE_BUTTON_LABEL);
         changePourcentageStructureBtn.addActionListener(new ActionListener(){
@@ -88,7 +97,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         			reactToValidatePourcentageStructureButton();
         	}
         });
-        addWidgetInGridBagPanel(mainPanel, gridBag, changePourcentageStructureBtn, 2, formOffset + 2, 1, 1, 0);
+        addWidgetInGridBagPanel(mainPanel, gridBag, changePourcentageStructureBtn, 3, formOffset + 2, 1, 1, 0);
         
         computeBtn = new JButton("Calculer la répartition");
         computeBtn.addActionListener(new ActionListener(){
@@ -111,6 +120,9 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         prixDispositifValueLbl.setPreferredSize(lblFieldsDimension);
         addWidgetInGridBagPanel(mainPanel, gridBag, prixDispositifValueLbl, 1, formOffset + 5, 1, 1,0);
 
+        JLabel prixDispositifUnit = new JLabel("€");
+        addWidgetInGridBagPanel(mainPanel, gridBag, prixDispositifUnit, 2, formOffset + 5, 1, 1,0);
+
         JLabel prestationSoinsTitleLbl = new JLabel("Montant des prestations de soins :");
         addWidgetInGridBagPanel(mainPanel, gridBag, prestationSoinsTitleLbl, 0, formOffset + 6, 1, 1,0);
 
@@ -119,6 +131,9 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         prestationSoinsValueLbl.setPreferredSize(lblFieldsDimension);
         addWidgetInGridBagPanel(mainPanel, gridBag, prestationSoinsValueLbl, 1, formOffset + 6, 1, 1,0);
 
+        JLabel prestationSoinsUnit = new JLabel("€");
+        addWidgetInGridBagPanel(mainPanel, gridBag, prestationSoinsUnit, 2, formOffset + 6, 1, 1,0);
+
         JLabel chargesStructureTitleLbl = new JLabel("Charges de structure :");
         addWidgetInGridBagPanel(mainPanel, gridBag, chargesStructureTitleLbl, 0, formOffset + 7, 1, 1,0);
 
@@ -126,6 +141,9 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         chargesStructureValueLbl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         chargesStructureValueLbl.setPreferredSize(lblFieldsDimension);
         addWidgetInGridBagPanel(mainPanel, gridBag, chargesStructureValueLbl, 1, formOffset + 7, 1, 1,0);
+
+        JLabel chargesStructureUnit = new JLabel("€");
+        addWidgetInGridBagPanel(mainPanel, gridBag, chargesStructureUnit, 2, formOffset + 7, 1, 1,0);
 
         pourcentageStructureTxt.setText(Double.valueOf(repartitionController.getPourcentageStructure()).toString());
         
