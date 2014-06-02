@@ -23,6 +23,7 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 	private SearchController searchController = new SearchController();
     private JList resultsList;
     private JTextField txtInput;
+    private JLabel lblNbActsFound;
 	public GUISearchScreenCoordinator(GUIGlobalCoordinator globalCoordinator)
 	{
 		super(globalCoordinator);
@@ -51,6 +52,11 @@ public class GUISearchScreenCoordinator extends GUICoordinator
         txtInput.setPreferredSize(new Dimension(400, 30));
         txtInput.getDocument().addDocumentListener(new TxtInputListener());
         addWidgetInGridBagPanel(searchPanel, gridBag, txtInput, 1, 2, 1, 1,0);
+
+        lblNbActsFound = new JLabel("actes trouvés");
+        lblNbActsFound.setPreferredSize(new Dimension(475, 30));
+        lblNbActsFound.setFont(new Font(getDefaultFontName(), Font.PLAIN, lblSearch.getFont().getSize()));
+        addWidgetInGridBagPanel(searchPanel, gridBag, lblNbActsFound, 2, 2, 1, 1, 0);
 
         resultsList = new JList();
         resultsList.setModel(new AbstractListModel(){
@@ -99,12 +105,18 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 		searchController.queryAllLabels();
 		resultsList.revalidate();
 		resultsList.repaint();
+		updateLabelNbActsFound();
 	}
 	private void reactToTxtInputChange()
 	{
 		searchController.queryLabelsFilteredByInput(txtInput.getText());
 		resultsList.revalidate();
 		resultsList.repaint();
+		updateLabelNbActsFound();
+	}
+	private void updateLabelNbActsFound()
+	{
+		lblNbActsFound.setText(searchController.getNumberOfDisplayLabels() + " actes trouvés");
 	}
 	private void reactToListSelection()
 	{
