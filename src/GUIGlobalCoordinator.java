@@ -83,6 +83,10 @@ public class GUIGlobalCoordinator {
             }
         } catch (Exception e) {}
         m_guiFrame.setVisible(true);
+        if (!Authentification.isAuthentified())
+        {
+        	System.exit(0);
+        }
 	}
 	private void switchTo(GUICoordinator newActiveCoordinator)
 	{
