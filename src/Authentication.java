@@ -37,7 +37,7 @@ public class Authentication {
 			    }
 				if (!authenticationVerified)
 				{
-					answer = JOptionPane.showConfirmDialog(null, "<html>Veuillez ins&#233rer la cl&#233 USB pour d&#233marrer le programme.</html>", "<html>Cl&#233 manquante</html>", JOptionPane.OK_CANCEL_OPTION);
+					answer = JOptionPane.showConfirmDialog(null, "<html>Veuillez ins&#233rer la cl&#233 USB pour d&#233marrer le programme.</html>", "Cle non detectee", JOptionPane.OK_CANCEL_OPTION);
 				}
 			}
 			while (!authenticationVerified && answer == JOptionPane.OK_OPTION);
