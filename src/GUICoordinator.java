@@ -27,7 +27,7 @@ public abstract class GUICoordinator
 	{
 		m_scrollPane = new JScrollPane(m_panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		frame.add(m_scrollPane);
-		frame.getContentPane().revalidate();
+		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 	}
 	public void inactivate(JFrame frame)
