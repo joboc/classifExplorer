@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
 
-public class Authentification {
+public class Authentication {
 	static boolean isAuthentified()
 	{
         String osName = System.getProperty("os.name").toLowerCase();

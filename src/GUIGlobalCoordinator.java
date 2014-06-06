@@ -83,7 +83,7 @@ public class GUIGlobalCoordinator {
             }
         } catch (Exception e) {}
         m_guiFrame.setVisible(true);
-        if (!Authentification.isAuthentified())
+        if (!Authentication.isAuthentified())
         {
         	System.exit(0);
         }
