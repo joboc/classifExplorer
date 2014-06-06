@@ -37,7 +37,7 @@ public class GUIGlobalCoordinator {
 	}
 	public void reactToExitCommand()
 	{
-		int answer = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir quitter ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+		int answer = JOptionPane.showConfirmDialog(null, "<html>Etes-vous s&#251r(e) de vouloir quitter ?</html>", "Confirmation", JOptionPane.YES_NO_OPTION);
 		if (answer == JOptionPane.YES_OPTION)
 		{
 			System.exit(0);

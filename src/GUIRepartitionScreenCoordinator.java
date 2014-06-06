@@ -39,7 +39,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
 	}
 	private void initialize()
 	{
-		JPanel headerPanel = createStandardHeaderPanel("Répartition des frais");
+		JPanel headerPanel = createStandardHeaderPanel("<html>R&#233partition des frais</html>");
 		
         JPanel mainPanel = new JPanel();
         GridBagLayout gridBag = new GridBagLayout();
@@ -47,7 +47,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         Dimension txtFieldsDimension = new Dimension(70, 30);
         
         int formOffset = 0;
-        JLabel achatLbl = new JLabel("Prix d'achat payé au fournisseur :");
+        JLabel achatLbl = new JLabel("<html>Prix d'achat pay&#233 au fournisseur :</html>");
         addWidgetInGridBagPanel(mainPanel, gridBag, achatLbl, 0, formOffset + 0, 1, 1,0);
 
         achatTxt = new JTextField();
@@ -57,10 +57,10 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         achatTxtDoc.setDocumentFilter(new NumbersFilter());
         addWidgetInGridBagPanel(mainPanel, gridBag, achatTxt, 1, formOffset + 0, 1, 1,0);
 
-        JLabel achatUnit = new JLabel("€");
+        JLabel achatUnit = new JLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(mainPanel, gridBag, achatUnit, 2, formOffset + 0, 1, 1,0);
 
-        JLabel honorairesLbl = new JLabel("Honoraires payés par le patient :");
+        JLabel honorairesLbl = new JLabel("<html>Honoraires pay&#233s par le patient :</html>");
         addWidgetInGridBagPanel(mainPanel, gridBag, honorairesLbl, 0, formOffset + 1, 1, 1,0);
 
         honorairesTxt = new JTextField();
@@ -70,7 +70,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         honorairesTxtDoc.setDocumentFilter(new NumbersFilter());
         addWidgetInGridBagPanel(mainPanel, gridBag, honorairesTxt, 1, formOffset + 1, 1, 1,0);
 
-        JLabel honorairesUnit = new JLabel("€");
+        JLabel honorairesUnit = new JLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(mainPanel, gridBag, honorairesUnit, 2, formOffset + 1, 1, 1,0);
 
         JLabel pourcentageStructureLbl = new JLabel("% de coûts de structure :");
@@ -99,7 +99,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         });
         addWidgetInGridBagPanel(mainPanel, gridBag, changePourcentageStructureBtn, 3, formOffset + 2, 1, 1, 0);
         
-        computeBtn = new JButton("Calculer la répartition");
+        computeBtn = new JButton("<html>Calculer la r&#233partition</html>");
         computeBtn.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e){
         		reactToComputeButton();
@@ -112,7 +112,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         lblEmpty.setPreferredSize(new Dimension(10, 50));
         addWidgetInGridBagPanel(mainPanel, gridBag, lblEmpty, 0, formOffset + 4, 1, 1,0);
 
-        JLabel prixDispositifTitleLbl = new JLabel("Prix de vente du dispositif médical :");
+        JLabel prixDispositifTitleLbl = new JLabel("<html>Prix de vente du dispositif m&#233dical :</html>");
         addWidgetInGridBagPanel(mainPanel, gridBag, prixDispositifTitleLbl, 0, formOffset + 5, 1, 1,0);
 
         prixDispositifValueLbl = new JLabel();
@@ -120,7 +120,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         prixDispositifValueLbl.setPreferredSize(lblFieldsDimension);
         addWidgetInGridBagPanel(mainPanel, gridBag, prixDispositifValueLbl, 1, formOffset + 5, 1, 1,0);
 
-        JLabel prixDispositifUnit = new JLabel("€");
+        JLabel prixDispositifUnit = new JLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(mainPanel, gridBag, prixDispositifUnit, 2, formOffset + 5, 1, 1,0);
 
         JLabel prestationSoinsTitleLbl = new JLabel("Montant des prestations de soins :");
@@ -131,7 +131,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         prestationSoinsValueLbl.setPreferredSize(lblFieldsDimension);
         addWidgetInGridBagPanel(mainPanel, gridBag, prestationSoinsValueLbl, 1, formOffset + 6, 1, 1,0);
 
-        JLabel prestationSoinsUnit = new JLabel("€");
+        JLabel prestationSoinsUnit = new JLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(mainPanel, gridBag, prestationSoinsUnit, 2, formOffset + 6, 1, 1,0);
 
         JLabel chargesStructureTitleLbl = new JLabel("Charges de structure :");
@@ -142,7 +142,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         chargesStructureValueLbl.setPreferredSize(lblFieldsDimension);
         addWidgetInGridBagPanel(mainPanel, gridBag, chargesStructureValueLbl, 1, formOffset + 7, 1, 1,0);
 
-        JLabel chargesStructureUnit = new JLabel("€");
+        JLabel chargesStructureUnit = new JLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(mainPanel, gridBag, chargesStructureUnit, 2, formOffset + 7, 1, 1,0);
 
         pourcentageStructureTxt.setText(Double.valueOf(repartitionController.getPourcentageStructure()).toString());
@@ -197,7 +197,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
 		String newPourcentageStructure = pourcentageStructureTxt.getText();
 		if (!Double.valueOf(oldPourcentageStructure).equals(Double.valueOf(newPourcentageStructure)))
 		{
-			String confirmationMessage = "Etes-vous sûr de vouloir modifier le % de charge de structure\n de " + oldPourcentageStructure +"% à " + newPourcentageStructure + "% ?";
+			String confirmationMessage = "<html>Etes-vous s&#251r de vouloir modifier le % de charge de structure <br>de " + oldPourcentageStructure +"% &#224 " + newPourcentageStructure + "% ?</html>";
 			int answer = JOptionPane.showConfirmDialog(null, confirmationMessage, "Confirmation", JOptionPane.YES_NO_OPTION);
 			if (answer == JOptionPane.YES_OPTION)
 			{

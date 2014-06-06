@@ -54,7 +54,7 @@ public class GUISearchScreenCoordinator extends GUICoordinator
         txtInput.getDocument().addDocumentListener(new TxtInputListener());
         addWidgetInGridBagPanel(mainPanel, gridBag, txtInput, 1, 2, 1, 1,0);
 
-        lblNbActsFound = new JLabel("actes trouvés");
+        lblNbActsFound = new JLabel("<html>actes trouv&#233s</html>");
         lblNbActsFound.setPreferredSize(new Dimension(475, 30));
         lblNbActsFound.setFont(new Font(getDefaultFontName(), Font.PLAIN, lblSearch.getFont().getSize()));
         addWidgetInGridBagPanel(mainPanel, gridBag, lblNbActsFound, 2, 2, 1, 1, 0);
@@ -132,16 +132,16 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 	}
 	private void updateLabelNbActsFound()
 	{
-		lblNbActsFound.setText(searchController.getNumberOfDisplayLabels() + " actes trouvés");
+		lblNbActsFound.setText("<html>"+ searchController.getNumberOfDisplayLabels() + " actes trouv&#233s</html>");
 	}
 	private void reactToListSelection()
 	{
 		searchController.reactToSelection(resultsList.getSelectedIndex());
 		String code = searchController.getCodeAt(resultsList.getSelectedIndex());
 		double price = searchController.getPriceAt(resultsList.getSelectedIndex());
-		String displayPrice = price != 0.0 ? Double.toString(price) + "€" : "Non pris en charge";
-		String codeInfo = "Code : " + code + "\nTarif : " + displayPrice;
-		JOptionPane.showMessageDialog(null, codeInfo, "Informations sur l'acte", JOptionPane.PLAIN_MESSAGE);
+		String displayPrice = price != 0.0 ? Double.toString(price) + "&#8364" : "Non pris en charge";
+		String codeInfoHtml = "Code : " + code + "<br>Tarif : " + displayPrice;
+		JOptionPane.showMessageDialog(null, "<html>"+codeInfoHtml+"</html>", "Informations sur l'acte", JOptionPane.PLAIN_MESSAGE);
 		txtInput.requestFocus();
 	}
 }
