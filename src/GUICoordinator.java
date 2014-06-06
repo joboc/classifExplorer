@@ -14,6 +14,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 
 public abstract class GUICoordinator
@@ -24,13 +25,14 @@ public abstract class GUICoordinator
 	
 	public void activate(JFrame frame)
 	{
-		frame.add(m_panel);
-		m_panel.revalidate();
-		m_panel.repaint();
+		m_scrollPane = new JScrollPane(m_panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		frame.add(m_scrollPane);
+		frame.getContentPane().revalidate();
+		frame.getContentPane().repaint();
 	}
 	public void inactivate(JFrame frame)
 	{
-		frame.remove(m_panel);
+		frame.remove(m_scrollPane);
 	}
 	public void onExit()
 	{
@@ -102,6 +104,7 @@ public abstract class GUICoordinator
         return panel;
 	}
 
+	private JScrollPane m_scrollPane;
 	private JPanel m_panel;
 	private GUIGlobalCoordinator m_globalCoordinator;
 
