@@ -138,9 +138,8 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 	{
 		searchController.reactToSelection(resultsList.getSelectedIndex());
 		String code = searchController.getCodeAt(resultsList.getSelectedIndex());
-		double price = searchController.getPriceAt(resultsList.getSelectedIndex());
-		String displayPrice = price != 0.0 ? Double.toString(price) + "&#8364" : "Non pris en charge";
-		String codeInfoHtml = "Code : " + code + "<br>Tarif : " + displayPrice;
+		String price = searchController.getPriceAt(resultsList.getSelectedIndex());
+		String codeInfoHtml = "Code : " + code + "<br>Tarif : " + price;
 		JOptionPane.showMessageDialog(null, "<html>"+codeInfoHtml+"</html>", "Informations sur l'acte", JOptionPane.PLAIN_MESSAGE);
 		txtInput.requestFocus();
 	}

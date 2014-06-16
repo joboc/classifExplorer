@@ -65,7 +65,7 @@ public class SearchController {
 	{
 		return m_displayActs.get(index).getCode().getValue();
 	}
-	public double getPriceAt(int index)
+	public String getPriceAt(int index)
 	{
 		return m_displayActs.get(index).getContent().getPrice();
 	}
