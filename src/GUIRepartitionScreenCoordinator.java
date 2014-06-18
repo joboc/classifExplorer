@@ -73,7 +73,7 @@ public class GUIRepartitionScreenCoordinator extends GUICoordinator {
         JLabel honorairesUnit = new JLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(mainPanel, gridBag, honorairesUnit, 2, formOffset + 1, 1, 1,0);
 
-        JLabel pourcentageStructureLbl = new JLabel("% de coûts de structure :");
+        JLabel pourcentageStructureLbl = new JLabel("<html>% de co&#251ts de structure :</html>");
         addWidgetInGridBagPanel(mainPanel, gridBag, pourcentageStructureLbl, 0, formOffset + 2, 1, 1,0);
 
         pourcentageStructureTxt = new JTextField();
