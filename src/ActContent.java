@@ -1,9 +1,9 @@
 
 public class ActContent {
 	private String m_label;
-	private String m_price;
+	private double m_price;
 	private int m_timesViewed;
-	public ActContent(String label, String price)
+	public ActContent(String label, double price)
 	{
 		m_label = label;
 		m_price = price;
@@ -19,7 +19,7 @@ public class ActContent {
 	{
 		return m_label;
 	}
-	public String getPrice()
+	public double getPrice()
 	{
 		return m_price;
 	}

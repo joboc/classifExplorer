@@ -41,14 +41,6 @@ public class GUIMainMenuCoordinator extends GUICoordinator {
         });
         addWidgetInGridBagPanel(menuPanel, gridBag, gotoSearch, 0, 3, 1, 1,100);
 
-        JButton goToRepartition = new JButton("<html>R&#233partition des frais</html>");
-        goToRepartition.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent e){
-        		getGlobalCoordinator().reactToMainMenuGotoRepartition();
-        	}
-        });
-        addWidgetInGridBagPanel(menuPanel, gridBag, goToRepartition, 0, 4, 1, 1,100);
-
         JButton exit = new JButton("Quitter");
         exit.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e){

@@ -136,11 +136,9 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 	}
 	private void reactToListSelection()
 	{
-		searchController.reactToSelection(resultsList.getSelectedIndex());
-		String code = searchController.getCodeAt(resultsList.getSelectedIndex());
-		String price = searchController.getPriceAt(resultsList.getSelectedIndex());
-		String codeInfoHtml = "Code : " + code + "<br>Tarif : " + price;
-		JOptionPane.showMessageDialog(null, "<html>"+codeInfoHtml+"</html>", "Informations sur l'acte", JOptionPane.PLAIN_MESSAGE);
+		DevisController actDevisController = searchController.selectAct(resultsList.getSelectedIndex());
 		txtInput.requestFocus();
+		GUICoordinator actDevisCoordinator = new GUIDevisScreenCoordinator(actDevisController, getGlobalCoordinator());
+		getGlobalCoordinator().display(actDevisCoordinator);
 	}
 }

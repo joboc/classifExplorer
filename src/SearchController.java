@@ -57,19 +57,11 @@ public class SearchController {
 	{
 		return m_displayActs.size();
 	}
-	public void reactToSelection(int index)
+	public DevisController selectAct(int index)
 	{
 		m_displayActs.get(index).getContent().IncrementTimesViewed();
+		return new DevisController(m_displayActs.get(index));
 	}
-	public String getCodeAt(int index)
-	{
-		return m_displayActs.get(index).getCode().getValue();
-	}
-	public String getPriceAt(int index)
-	{
-		return m_displayActs.get(index).getContent().getPrice();
-	}
-
 	private class actSorterByDescendingViewsAscendingLabel implements Comparator<Act>
 	{
 		public int compare(Act a1, Act a2)

@@ -18,13 +18,23 @@ public class GUIGlobalCoordinator {
 		initializeFrame();		
 		display(new GUIMainMenuCoordinator(this));
 	}
+	public void display(GUICoordinator newActiveCoordinator)
+	{
+		if (m_coordinators.size() > 0)
+			m_coordinators.peek().inactivate(m_guiFrame);
+		m_coordinators.push(newActiveCoordinator);
+		newActiveCoordinator.activate(m_guiFrame);
+	}
+	public void backToPreviousScreen()
+	{
+		m_coordinators.peek().inactivate(m_guiFrame);
+		m_coordinators.pop();
+		if (m_coordinators.size() > 0)
+			m_coordinators.peek().activate(m_guiFrame);
+	}
 	public void reactToMainMenuGotoSearch()
 	{
 		display(new GUISearchScreenCoordinator(this));
-	}
-	public void reactToMainMenuGotoRepartition()
-	{
-		display(new GUIRepartitionScreenCoordinator(this));
 	}
 	public void reactToExitCommand()
 	{
@@ -75,19 +85,5 @@ public class GUIGlobalCoordinator {
         {
         	System.exit(0);
         }
-	}
-	private void display(GUICoordinator newActiveCoordinator)
-	{
-		if (m_coordinators.size() > 0)
-			m_coordinators.peek().inactivate(m_guiFrame);
-		m_coordinators.push(newActiveCoordinator);
-		newActiveCoordinator.activate(m_guiFrame);
-	}
-	public void backToPreviousScreen()
-	{
-		m_coordinators.peek().inactivate(m_guiFrame);
-		m_coordinators.pop();
-		if (m_coordinators.size() > 0)
-			m_coordinators.peek().activate(m_guiFrame);
 	}
 }
