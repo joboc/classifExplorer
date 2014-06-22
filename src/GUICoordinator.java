@@ -34,11 +34,7 @@ public abstract class GUICoordinator
 	{
 		frame.remove(m_scrollPane);
 	}
-	public void onExit()
-	{
-		
-	}
-	
+
 	protected void addWidgetInGridBagPanel(JPanel panel, GridBagLayout gridBag, JComponent component, int gridx, int gridy, int gridwidth, int gridheight, int ipadx)
 	{
         GridBagConstraints cons = new GridBagConstraints();
@@ -90,14 +86,15 @@ public abstract class GUICoordinator
         paddedTitlePanel.add(paddingPanel, BorderLayout.NORTH);
         paddedTitlePanel.add(titlePanel, BorderLayout.CENTER);
 
-        JButton backToMainMenu = new JButton("<html>&#8592 Retour au<br>menu principal</html>");
-        backToMainMenu.addActionListener(new ActionListener(){
+        JButton backToPreviousScreen = new JButton("<html>&#8592 Retour</html>");
+        backToPreviousScreen.setPreferredSize(new Dimension(85, 40));
+        backToPreviousScreen.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e){
-        		getGlobalCoordinator().reactToBackToMainMenu();
+        		getGlobalCoordinator().backToPreviousScreen();
         	}
         });
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(backToMainMenu);
+        buttonPanel.add(backToPreviousScreen);
 
         panel.add(paddedTitlePanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.WEST);

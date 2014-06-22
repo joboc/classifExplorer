@@ -105,9 +105,9 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 		super.activate(frame);
 		txtInput.requestFocus();
 	}
-	public void onExit()
+	public void inactivate(JFrame frame)
 	{
-		super.onExit();
+		super.inactivate(frame);
 		ActsData.save();
 	}
 	private class TxtInputListener implements DocumentListener

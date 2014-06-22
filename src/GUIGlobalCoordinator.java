@@ -1,6 +1,7 @@
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
+import java.util.ListIterator;
+import java.util.Stack;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -10,30 +11,20 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 public class GUIGlobalCoordinator {
 	private JFrame m_guiFrame = new JFrame();
-	GUICoordinator m_activeCoordinator;
-	ArrayList<GUICoordinator> m_coordinators = new ArrayList<GUICoordinator>();
-	GUICoordinator m_mainMenuCoordinator;
-	GUICoordinator m_searchScreenCoordinator;
-	GUICoordinator m_repartitionScreenCoordinator;
+	Stack<GUICoordinator> m_coordinators = new Stack<GUICoordinator>();
+	
 	public GUIGlobalCoordinator()
 	{
-		initializeFrame();
-		m_mainMenuCoordinator = new GUIMainMenuCoordinator(this);
-		m_coordinators.add(m_mainMenuCoordinator);
-		m_searchScreenCoordinator = new GUISearchScreenCoordinator(this);
-		m_coordinators.add(m_searchScreenCoordinator);
-		m_repartitionScreenCoordinator = new GUIRepartitionScreenCoordinator(this);
-		m_coordinators.add(m_repartitionScreenCoordinator);
-		
-		switchTo(m_mainMenuCoordinator);
+		initializeFrame();		
+		display(new GUIMainMenuCoordinator(this));
 	}
 	public void reactToMainMenuGotoSearch()
 	{
-		switchTo(m_searchScreenCoordinator);
+		display(new GUISearchScreenCoordinator(this));
 	}
 	public void reactToMainMenuGotoRepartition()
 	{
-		switchTo(m_repartitionScreenCoordinator);
+		display(new GUIRepartitionScreenCoordinator(this));
 	}
 	public void reactToExitCommand()
 	{
@@ -43,15 +34,12 @@ public class GUIGlobalCoordinator {
 			System.exit(0);
 		}
 	}
-	public void reactToBackToMainMenu()
-	{
-		switchTo(m_mainMenuCoordinator);
-	}
 	private void reactToApplicationClose()
 	{
-		for (GUICoordinator e : m_coordinators)
+		ListIterator<GUICoordinator> it = m_coordinators.listIterator(m_coordinators.size());
+		while (it.hasPrevious())
 		{
-			e.onExit();
+			it.previous().inactivate(m_guiFrame);
 		}
 	}
 	private class ShutdownHook extends Thread
@@ -88,11 +76,18 @@ public class GUIGlobalCoordinator {
         	System.exit(0);
         }
 	}
-	private void switchTo(GUICoordinator newActiveCoordinator)
+	private void display(GUICoordinator newActiveCoordinator)
 	{
-		if (m_activeCoordinator != null)
-			m_activeCoordinator.inactivate(m_guiFrame);
+		if (m_coordinators.size() > 0)
+			m_coordinators.peek().inactivate(m_guiFrame);
+		m_coordinators.push(newActiveCoordinator);
 		newActiveCoordinator.activate(m_guiFrame);
-		m_activeCoordinator = newActiveCoordinator;
+	}
+	public void backToPreviousScreen()
+	{
+		m_coordinators.peek().inactivate(m_guiFrame);
+		m_coordinators.pop();
+		if (m_coordinators.size() > 0)
+			m_coordinators.peek().activate(m_guiFrame);
 	}
 }
