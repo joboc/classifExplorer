@@ -247,9 +247,9 @@ public class GUIDevisScreenCoordinator extends GUICoordinator {
 	}
 	private void reactToComputeButton()
 	{
-		double achat = Double.parseDouble(m_achatTxt.getText());
-		double honoraires = Double.parseDouble(m_honorairesTxt.getText());
-		double pourcentageStructure = Double.parseDouble(m_pourcentageStructureTxt.getText());
+		double achat = m_achatTxt.getText().length() > 0 ? Double.parseDouble(m_achatTxt.getText()) : 0;
+		double honoraires = m_honorairesTxt.getText().length() > 0 ? Double.parseDouble(m_honorairesTxt.getText()) : 0;
+		double pourcentageStructure = m_pourcentageStructureTxt.getText().length() > 0 ? Double.parseDouble(m_pourcentageStructureTxt.getText()) : 0;
 
 		String dispositifMedical = Double.valueOf(m_devisController.computeDispositifMedical(achat, honoraires, pourcentageStructure)).toString();
 		m_prixDispositifValueLbl.setText(dispositifMedical);
