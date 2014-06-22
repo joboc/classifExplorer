@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -154,6 +155,7 @@ public class GUIDevisScreenCoordinator extends GUICoordinator {
         addWidgetInGridBagPanel(outputPanel, gridBag, actLabelTitleLbl, 0, 0, 1, 1,0);        
         m_actLabelLbl = new JLabel("<html>" + m_devisController.getActLabel() + "</html>");
         int actLabelWidth = 300;
+        m_actLabelLbl.setFont(new Font(getDefaultFontName(), Font.BOLD, m_actLabelLbl.getFont().getSize()));
         m_actLabelLbl.setPreferredSize(getPreferredSize(m_actLabelLbl.getText(), true, actLabelWidth));
         addWidgetInGridBagPanel(outputPanel, gridBag, m_actLabelLbl, 1, 0, 3, 1,0);
         
