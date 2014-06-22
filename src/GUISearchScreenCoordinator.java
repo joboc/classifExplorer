@@ -136,9 +136,21 @@ public class GUISearchScreenCoordinator extends GUICoordinator
 	}
 	private void reactToListSelection()
 	{
-		DevisController actDevisController = searchController.selectAct(resultsList.getSelectedIndex());
-		txtInput.requestFocus();
-		GUICoordinator actDevisCoordinator = new GUIDevisScreenCoordinator(actDevisController, getGlobalCoordinator());
-		getGlobalCoordinator().display(actDevisCoordinator);
+		int selectedIndex = resultsList.getSelectedIndex();
+		searchController.reactToSelection(selectedIndex);
+		
+		boolean isModificateurSelected = searchController.isModificateurAt(selectedIndex); 
+		if (!isModificateurSelected)
+		{
+			DevisController actDevisController = searchController.selectAct(selectedIndex);
+			txtInput.requestFocus();
+			GUICoordinator actDevisCoordinator = new GUIDevisScreenCoordinator(actDevisController, getGlobalCoordinator());
+			getGlobalCoordinator().display(actDevisCoordinator);
+		}
+		else
+		{
+			String modificateurDescription = searchController.getModificateurDescriptionAt(selectedIndex);
+			JOptionPane.showMessageDialog(null, modificateurDescription, "Modificateur", JOptionPane.OK_OPTION + JOptionPane.PLAIN_MESSAGE);
+		}
 	}
 }

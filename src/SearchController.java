@@ -59,8 +59,22 @@ public class SearchController {
 	}
 	public DevisController selectAct(int index)
 	{
-		m_displayActs.get(index).getContent().IncrementTimesViewed();
 		return new DevisController(m_displayActs.get(index));
+	}
+	public void reactToSelection(int index)
+	{
+		m_displayActs.get(index).getContent().IncrementTimesViewed();
+	}
+	public boolean isModificateurAt(int index)
+	{
+		return (m_displayActs.get(index).getContent() instanceof ModificateurContent);
+	}
+	public String getModificateurDescriptionAt(int index)
+	{
+		String code = m_displayActs.get(index).getCode().getValue();
+		ModificateurContent modificateurContent = (ModificateurContent) m_displayActs.get(index).getContent();
+		String action = modificateurContent.getModificateurAction();
+		return "<html>Code du modificateur : " + code + "<br>Tarif du modificateur : " + action + "</html>";
 	}
 	private class actSorterByDescendingViewsAscendingLabel implements Comparator<Act>
 	{
