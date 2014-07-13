@@ -63,7 +63,7 @@ public class GUIGlobalCoordinator {
 	private void initializeFrame()
 	{
         m_guiFrame.setTitle("Classification Explorer");
-        m_guiFrame.setSize(1100,800);
+        m_guiFrame.setSize(1125,825);
         m_guiFrame.setLocationRelativeTo(null);
         m_guiFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         m_guiFrame.addWindowListener(new WindowAdapter(){
