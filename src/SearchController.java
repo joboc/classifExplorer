@@ -1,3 +1,4 @@
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,7 +32,7 @@ public class SearchController {
 			for (String word : m_filterWords)
 			{
 				// tous les mots saisis doivent etre dans le label
-				boolean wordFound = Pattern.compile(Pattern.quote(word), Pattern.CASE_INSENSITIVE).matcher(actLabel).find();
+				boolean wordFound = Pattern.compile(Pattern.quote(stripOffAccents(word)), Pattern.CASE_INSENSITIVE).matcher(stripOffAccents(actLabel)).find();
 				actLabelContainsAllInputWords = actLabelContainsAllInputWords && wordFound;
 			}
 			if (actLabelContainsAllInputWords)
@@ -93,8 +94,10 @@ public class SearchController {
 		ArrayList<Interval> matchIntervals = new ArrayList<Interval>();
 		for (String word : matchWords)
 		{
-			Pattern wordPattern = Pattern.compile(word, Pattern.CASE_INSENSITIVE);
-			Matcher wordMatcher = wordPattern.matcher(target);
+			String unaccentedWord = stripOffAccents(word);
+			String unaccentedTarget = stripOffAccents(target);
+			Pattern wordPattern = Pattern.compile(unaccentedWord, Pattern.CASE_INSENSITIVE);
+			Matcher wordMatcher = wordPattern.matcher(unaccentedTarget);
 			while (wordMatcher.find())
 			{
 				matchIntervals.add(new Interval(wordMatcher.start(), wordMatcher.end()));
@@ -102,6 +105,12 @@ public class SearchController {
 		}
 		mergeIntervals(matchIntervals);
 		return matchIntervals;
+	}
+	static private String stripOffAccents(String text)
+	{	 
+		String unaccentedText = Normalizer.normalize(text, Normalizer.Form.NFD);
+		unaccentedText = unaccentedText.replaceAll("[^\\p{ASCII}]", "");
+		return unaccentedText;
 	}
 	private void mergeIntervals(ArrayList<Interval> intervals)
 	{
