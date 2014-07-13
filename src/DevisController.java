@@ -33,7 +33,7 @@ public class DevisController {
 		{
 			dispositifMedical = prixAchat / (1 - pourcentageStructure / 100);
 		}
-		return (double) Math.round(dispositifMedical * 100) / 100;
+		return roundToCent(dispositifMedical);
 	}
 	public double computePrestationsSoin(double prixAchat, double honoraires, double pourcentageStructure)
 	{
@@ -41,15 +41,19 @@ public class DevisController {
 		double chargeStrucure = computeChargeStructure(honoraires, pourcentageStructure);
 		double prestationSoin = honoraires - dispositifMedical - chargeStrucure;
 
-		return (double) Math.round(prestationSoin * 100) / 100;
+		return roundToCent(prestationSoin);
 	}
 	public double computeChargeStructure(double honoraires, double pourcentageStructure)
 	{
 		double chargeStructure = pourcentageStructure / 100 * honoraires;
-		return (double) Math.round(chargeStructure * 100) / 100;
+		return roundToCent(chargeStructure);
 	}
 	public double computeMontantNonRemboursable(double honoraires)
 	{
-		return honoraires - getActPrice();
+		return roundToCent(honoraires - getActPrice());
+	}
+	private static double roundToCent(double value)
+	{
+		return (double) Math.round(value * 100) / 100;
 	}
 }
