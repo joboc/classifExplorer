@@ -243,8 +243,8 @@ public class GUIDevisScreenCoordinator extends GUICoordinator {
 		}
 		private void init()
 		{
-	        setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        GUIWidgetFactory.adapt(this);
+	        setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        setPreferredSize(new Dimension(70, 30));
 	        setHorizontalAlignment(JLabel.RIGHT);
 		}
