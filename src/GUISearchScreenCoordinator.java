@@ -45,21 +45,21 @@ public class GUISearchScreenCoordinator extends GUICoordinator
         titleLblEmpty.setPreferredSize(new Dimension(10, 40));
         addWidgetInGridBagPanel(mainPanel, gridBag, titleLblEmpty, 0, 1, 1, 1,0);
         
-        JLabel lblSearch = new JLabel("Trouver un acte :");
+        JLabel lblSearch = GUIWidgetFactory.createLabel("Trouver un acte :");
         lblSearch.setFont(new Font(getDefaultFontName(), Font.PLAIN, lblSearch.getFont().getSize()));
         addWidgetInGridBagPanel(mainPanel, gridBag, lblSearch, 0, 2, 1, 1,0);
 
-        txtInput = new JTextField("");
+        txtInput = GUIWidgetFactory.createTextField("");
         txtInput.setPreferredSize(new Dimension(400, 30));
         txtInput.getDocument().addDocumentListener(new TxtInputListener());
         addWidgetInGridBagPanel(mainPanel, gridBag, txtInput, 1, 2, 1, 1,0);
 
-        lblNbActsFound = new JLabel("<html>actes trouv&#233s</html>");
+        lblNbActsFound = GUIWidgetFactory.createLabel("<html>actes trouv&#233s</html>");
         lblNbActsFound.setPreferredSize(new Dimension(475, 30));
         lblNbActsFound.setFont(new Font(getDefaultFontName(), Font.PLAIN, lblSearch.getFont().getSize()));
         addWidgetInGridBagPanel(mainPanel, gridBag, lblNbActsFound, 2, 2, 1, 1, 0);
 
-        resultsList = new JList();
+        resultsList = GUIWidgetFactory.createList();
         resultsList.setModel(new AbstractListModel(){
 			public int getSize()
 			{
@@ -88,7 +88,7 @@ public class GUISearchScreenCoordinator extends GUICoordinator
             }
        });
         JScrollPane resultsListScrollPane = new JScrollPane(resultsList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        resultsListScrollPane.setPreferredSize(new Dimension(900, 600));
+        resultsListScrollPane.setPreferredSize(new Dimension(950, 600));
         resultsListScrollPane.setBorder(txtInput.getBorder());
         addWidgetInGridBagPanel(mainPanel, gridBag, resultsListScrollPane, 1, 3, 2, 1, 0);
 

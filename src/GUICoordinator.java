@@ -53,7 +53,7 @@ public abstract class GUICoordinator
 	}
 	protected String getDefaultFontName()
 	{
-		JLabel lblDummy = new JLabel();
+		JLabel lblDummy = GUIWidgetFactory.createLabel();
 		return lblDummy.getFont().getName();
 	}
 	
@@ -70,13 +70,13 @@ public abstract class GUICoordinator
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         
-        JLabel titleLabel = new JLabel(screenTitle);
+        JLabel titleLabel = GUIWidgetFactory.createLabel(screenTitle);
         titleLabel.setFont(new Font(getDefaultFontName(), Font.BOLD + Font.ITALIC, 36));
         titleLabel.setForeground(Color.gray);
         JPanel titlePanel = new JPanel();
         titlePanel.add(titleLabel);
 
-//        JLabel paddingLabel = new JLabel();
+//        JLabel paddingLabel = GUIWidgetFactory.createLabel();
 //        paddingLabel.setPreferredSize(new Dimension(10,20));
         JPanel paddingPanel = new JPanel();
 //        paddingPanel.add(paddingLabel);
@@ -86,8 +86,8 @@ public abstract class GUICoordinator
         paddedTitlePanel.add(paddingPanel, BorderLayout.NORTH);
         paddedTitlePanel.add(titlePanel, BorderLayout.CENTER);
 
-        JButton backToPreviousScreen = new JButton("<html>&#8592 Retour</html>");
-        backToPreviousScreen.setPreferredSize(new Dimension(85, 40));
+        JButton backToPreviousScreen = GUIWidgetFactory.createButton("<html>&#8592 Retour</html>");
+        backToPreviousScreen.setPreferredSize(new Dimension(100, 40));
         backToPreviousScreen.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e){
         		getGlobalCoordinator().backToPreviousScreen();

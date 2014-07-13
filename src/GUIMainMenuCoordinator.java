@@ -21,11 +21,11 @@ public class GUIMainMenuCoordinator extends GUICoordinator {
         GridBagLayout gridBag = new GridBagLayout();
         menuPanel.setLayout(gridBag);
         
-        JLabel titleLbl = new JLabel("Classification");
+        JLabel titleLbl = GUIWidgetFactory.createLabel("Classification");
         titleLbl.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 36));
         addWidgetInGridBagPanel(menuPanel, gridBag, titleLbl, 0, 0, 2, 1,0);
 
-        JLabel titleLbl2 = new JLabel("Explorer");
+        JLabel titleLbl2 = GUIWidgetFactory.createLabel("Explorer");
         titleLbl2.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 36));
         addWidgetInGridBagPanel(menuPanel, gridBag, titleLbl2, 0, 1, 2, 1,0);
 
@@ -33,7 +33,7 @@ public class GUIMainMenuCoordinator extends GUICoordinator {
         titleLblEmpty.setPreferredSize(new Dimension(10, 30));
         addWidgetInGridBagPanel(menuPanel, gridBag, titleLblEmpty, 0, 2, 1, 1,0);
         
-        JButton gotoSearch = new JButton("Recherche d'actes");
+        JButton gotoSearch = GUIWidgetFactory.createButton("Recherche d'actes");
         gotoSearch.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e){
         		getGlobalCoordinator().reactToMainMenuGotoSearch();
@@ -41,7 +41,7 @@ public class GUIMainMenuCoordinator extends GUICoordinator {
         });
         addWidgetInGridBagPanel(menuPanel, gridBag, gotoSearch, 0, 3, 1, 1,100);
 
-        JButton exit = new JButton("Quitter");
+        JButton exit = GUIWidgetFactory.createButton("Quitter");
         exit.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e){
         		getGlobalCoordinator().reactToExitCommand();
@@ -53,7 +53,7 @@ public class GUIMainMenuCoordinator extends GUICoordinator {
         titleLblEmpty2.setPreferredSize(new Dimension(10, 160));
         addWidgetInGridBagPanel(menuPanel, gridBag, titleLblEmpty2, 0, 6, 1, 1,0);
         
-        JLabel versionLbl = new JLabel("<html>Bas&#233 sur la version 35 de la CCAM applicable au 1er juin 2014</html>");
+        JLabel versionLbl = GUIWidgetFactory.createLabel("<html>Bas&#233 sur la version 35 de la CCAM applicable au 1er juin 2014</html>");
         versionLbl.setFont(new Font(getDefaultFontName(), Font.PLAIN, 10));
         addWidgetInGridBagPanel(menuPanel, gridBag, versionLbl, 0, 7, 1, 1,0);
 

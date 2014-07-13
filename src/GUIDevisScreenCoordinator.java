@@ -56,15 +56,20 @@ public class GUIDevisScreenCoordinator extends GUICoordinator {
         GridBagLayout gridBag = new GridBagLayout();
         mainPanel.setLayout(gridBag);
 
+        // input components
         addWidgetInGridBagPanel(mainPanel, gridBag, buildInputPanel(), 0, 0, 1, 1,0);
         
-        JLabel lblEmpty = new JLabel();
-        lblEmpty.setPreferredSize(new Dimension(60, 10));
-        addWidgetInGridBagPanel(mainPanel, gridBag, lblEmpty, 1, 0, 1, 1,0);
+        // separation line
+        JLabel lblLine = GUIWidgetFactory.createLabel();
+        lblLine.setPreferredSize(new Dimension(1, 400));
+        lblLine.setBackground(Color.BLACK);
+        lblLine.setOpaque(true);
+        addWidgetInGridBagPanel(mainPanel, gridBag, lblLine, 1, 0, 1, 1,0);
 
+        // output components
         addWidgetInGridBagPanel(mainPanel, gridBag, buildOutputPanel(), 2, 0, 1, 1,0);
 
-        JLabel lblEmpty2 = new JLabel();
+        JLabel lblEmpty2 = GUIWidgetFactory.createLabel();
         lblEmpty2.setPreferredSize(new Dimension(10, 100));
         addWidgetInGridBagPanel(mainPanel, gridBag, lblEmpty2, 0, 1, 1, 1,0);
 
@@ -81,36 +86,37 @@ public class GUIDevisScreenCoordinator extends GUICoordinator {
         inputPanel.setLayout(gridBag);
         Dimension txtFieldsDimension = new Dimension(70, 30);
         
-        JLabel achatLbl = new JLabel("<html>Prix d'achat pay&#233 au fournisseur :</html>");
+        JLabel achatLbl = GUIWidgetFactory.createLabel("<html>Prix d'achat pay&#233 au fournisseur :</html>");
         addWidgetInGridBagPanel(inputPanel, gridBag, achatLbl, 0, 0, 1, 1,0);
 
-        m_achatTxt = new JTextField();
+        m_achatTxt = GUIWidgetFactory.createTextField();
+        int a = m_achatTxt.getFont().getSize();
         m_achatTxt.setPreferredSize(txtFieldsDimension);
         m_achatTxt.getDocument().addDocumentListener(new TxtInputListener());
         AbstractDocument achatTxtDoc = (AbstractDocument)m_achatTxt.getDocument();
         achatTxtDoc.setDocumentFilter(new NumbersFilter());
         addWidgetInGridBagPanel(inputPanel, gridBag, m_achatTxt, 1, 0, 1, 1,0);
 
-        JLabel achatUnit = new JLabel("<html>&#8364</html>");
+        JLabel achatUnit = GUIWidgetFactory.createLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(inputPanel, gridBag, achatUnit, 2, 0, 1, 1,0);
 
-        JLabel honorairesLbl = new JLabel("<html>Honoraires pay&#233s par le patient :</html>");
+        JLabel honorairesLbl = GUIWidgetFactory.createLabel("<html>Honoraires pay&#233s par le patient :</html>");
         addWidgetInGridBagPanel(inputPanel, gridBag, honorairesLbl, 0, 1, 1, 1,0);
 
-        m_honorairesTxt = new JTextField();
+        m_honorairesTxt = GUIWidgetFactory.createTextField();
         m_honorairesTxt.setPreferredSize(txtFieldsDimension);
         m_honorairesTxt.getDocument().addDocumentListener(new TxtInputListener());
         AbstractDocument honorairesTxtDoc = (AbstractDocument)m_achatTxt.getDocument();
         honorairesTxtDoc.setDocumentFilter(new NumbersFilter());
         addWidgetInGridBagPanel(inputPanel, gridBag, m_honorairesTxt, 1, 1, 1, 1,0);
 
-        JLabel honorairesUnit = new JLabel("<html>&#8364</html>");
+        JLabel honorairesUnit = GUIWidgetFactory.createLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(inputPanel, gridBag, honorairesUnit, 2, 1, 1, 1,0);
 
-        JLabel pourcentageStructureLbl = new JLabel("<html>% de co&#251ts de structure :</html>");
+        JLabel pourcentageStructureLbl = GUIWidgetFactory.createLabel("<html>% de co&#251ts de structure :</html>");
         addWidgetInGridBagPanel(inputPanel, gridBag, pourcentageStructureLbl, 0, 2, 1, 1,0);
 
-        m_pourcentageStructureTxt = new JTextField();
+        m_pourcentageStructureTxt = GUIWidgetFactory.createTextField();
         m_pourcentageStructureTxt.setPreferredSize(txtFieldsDimension);
         m_pourcentageStructureTxt.setEditable(false);
         m_pourcentageStructureTxt.setText(Double.valueOf(m_devisController.getPourcentageStructure()).toString());
@@ -118,10 +124,10 @@ public class GUIDevisScreenCoordinator extends GUICoordinator {
         percentageStructureTxtDoc.setDocumentFilter(new NumbersFilter());
         addWidgetInGridBagPanel(inputPanel, gridBag, m_pourcentageStructureTxt, 1, 2, 1, 1,0);
 
-        JLabel pourcentageStructureUnit = new JLabel("%");
+        JLabel pourcentageStructureUnit = GUIWidgetFactory.createLabel("%");
         addWidgetInGridBagPanel(inputPanel, gridBag, pourcentageStructureUnit, 2, 2, 1, 1,0);
 
-        m_changePourcentageStructureBtn = new JButton(CHANGE_POURCENTAGE_STRUCTURE_BUTTON_LABEL);
+        m_changePourcentageStructureBtn = GUIWidgetFactory.createButton(CHANGE_POURCENTAGE_STRUCTURE_BUTTON_LABEL);
         m_changePourcentageStructureBtn.addActionListener(new ActionListener(){
         	private boolean beingModified = false;
         	public void actionPerformed(ActionEvent e){
@@ -134,7 +140,7 @@ public class GUIDevisScreenCoordinator extends GUICoordinator {
         });
         addWidgetInGridBagPanel(inputPanel, gridBag, m_changePourcentageStructureBtn, 3, 2, 1, 1, 0);
         
-        m_computeBtn = new JButton("<html>Calculer la r&#233partition</html>");
+        m_computeBtn = GUIWidgetFactory.createButton("<html>Calculer la r&#233partition</html>");
         m_computeBtn.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e){
         		reactToComputeButton();
@@ -151,77 +157,77 @@ public class GUIDevisScreenCoordinator extends GUICoordinator {
         outputPanel.setLayout(gridBag);
 
         // libelle de l'acte
-        JLabel actLabelTitleLbl = new JLabel("<html>Libell&#233 de l'acte :</html>");
+        JLabel actLabelTitleLbl = GUIWidgetFactory.createLabel("<html>Libell&#233 de l'acte :</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, actLabelTitleLbl, 0, 0, 1, 1,0);        
-        m_actLabelLbl = new JLabel("<html>" + m_devisController.getActLabel() + "</html>");
+        m_actLabelLbl = GUIWidgetFactory.createLabel("<html>" + m_devisController.getActLabel() + "</html>");
         int actLabelWidth = 300;
         m_actLabelLbl.setFont(new Font(getDefaultFontName(), Font.BOLD, m_actLabelLbl.getFont().getSize()));
         m_actLabelLbl.setPreferredSize(getPreferredSize(m_actLabelLbl.getText(), true, actLabelWidth));
         addWidgetInGridBagPanel(outputPanel, gridBag, m_actLabelLbl, 1, 0, 3, 1,0);
         
         // code de l'acte
-        JLabel actCodeTitleLbl = new JLabel("<html>Code de l'acte :</html>");
+        JLabel actCodeTitleLbl = GUIWidgetFactory.createLabel("<html>Code de l'acte :</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, actCodeTitleLbl, 0, 1, 1, 1,0);        
-        m_actCodeLbl = new JLabel(m_devisController.getActCode());
+        m_actCodeLbl = GUIWidgetFactory.createLabel(m_devisController.getActCode());
         addWidgetInGridBagPanel(outputPanel, gridBag, m_actCodeLbl, 1, 1, 1, 1,0);
         
         // prix de vente du dispositif medical
-        JLabel prixDispositifTitleLbl = new JLabel("<html>Prix de vente du dispositif m&#233dical <strong>(A)</strong> :</html>");
+        JLabel prixDispositifTitleLbl = GUIWidgetFactory.createLabel("<html>Prix de vente du dispositif m&#233dical <strong>(A)</strong> :</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, prixDispositifTitleLbl, 0, 2, 1, 1,0);
         m_prixDispositifValueLbl = new OutputLabel();
         addWidgetInGridBagPanel(outputPanel, gridBag, m_prixDispositifValueLbl, 1, 2, 1, 1,0);
-        JLabel prixDispositifUnit = new JLabel("<html>&#8364</html>");
+        JLabel prixDispositifUnit = GUIWidgetFactory.createLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, prixDispositifUnit, 2, 2, 1, 1,0);
 
         // montant de la prestation de soins
-        JLabel prestationSoinsTitleLbl = new JLabel("<html>Montant des prestations de soins <strong>(B1)</strong> :</html>");
+        JLabel prestationSoinsTitleLbl = GUIWidgetFactory.createLabel("<html>Montant des prestations de soins <strong>(B1)</strong> :</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, prestationSoinsTitleLbl, 0, 3, 1, 1,0);
         m_prestationSoinsValueLbl = new OutputLabel();
         addWidgetInGridBagPanel(outputPanel, gridBag, m_prestationSoinsValueLbl, 1, 3, 1, 1,0);
-        JLabel prestationSoinsUnit = new JLabel("<html>&#8364</html>");
+        JLabel prestationSoinsUnit = GUIWidgetFactory.createLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, prestationSoinsUnit, 2, 3, 1, 1,0);
 
         // charges de structure
-        JLabel chargesStructureTitleLbl = new JLabel("<html>Charges de structure <strong>(B2)</strong> :</html>");
+        JLabel chargesStructureTitleLbl = GUIWidgetFactory.createLabel("<html>Charges de structure <strong>(B2)</strong> :</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, chargesStructureTitleLbl, 0, 4, 1, 1,0);
         m_chargesStructureValueLbl = new OutputLabel();
         addWidgetInGridBagPanel(outputPanel, gridBag, m_chargesStructureValueLbl, 1, 4, 1, 1,0);
-        JLabel chargesStructureUnit = new JLabel("<html>&#8364</html>");
+        JLabel chargesStructureUnit = GUIWidgetFactory.createLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, chargesStructureUnit, 2, 4, 1, 1,0);
         
         // honoraires
-        JLabel honorairesTitleLbl = new JLabel("<html>Montant des honoraires <strong>(C)</strong> :</html>");
+        JLabel honorairesTitleLbl = GUIWidgetFactory.createLabel("<html>Montant des honoraires <strong>(C)</strong> :</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, honorairesTitleLbl, 0, 5, 1, 1,0);
         m_honorairesValueLbl = new OutputLabel();
         addWidgetInGridBagPanel(outputPanel, gridBag, m_honorairesValueLbl, 1, 5, 1, 1,0);
-        JLabel honorairesUnit = new JLabel("<html>&#8364</html>");
+        JLabel honorairesUnit = GUIWidgetFactory.createLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, honorairesUnit, 2, 5, 1, 1,0);
 
         // base de remboursement
-        JLabel remboursementTitleLbl = new JLabel("<html>Base de remboursement <strong>(D)</strong> :</html>");
+        JLabel remboursementTitleLbl = GUIWidgetFactory.createLabel("<html>Base de remboursement <strong>(D)</strong> :</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, remboursementTitleLbl, 0, 6, 1, 1,0);
         m_remboursementValueLbl = new OutputLabel(Double.toString(m_devisController.getActPrice()));
         addWidgetInGridBagPanel(outputPanel, gridBag, m_remboursementValueLbl, 1, 6, 1, 1,0);
-        JLabel remboursementUnit = new JLabel("<html>&#8364</html>");
+        JLabel remboursementUnit = GUIWidgetFactory.createLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, remboursementUnit, 2, 6, 1, 1,0);
 
         // montant non remboursable
-        JLabel nonRemboursableTitleLbl = new JLabel("<html>Montant non remboursable <strong>(E)</strong> :</html>");
+        JLabel nonRemboursableTitleLbl = GUIWidgetFactory.createLabel("<html>Montant non remboursable <strong>(E)</strong> :</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, nonRemboursableTitleLbl, 0, 7, 1, 1,0);
         m_nonRemboursableValueLbl = new OutputLabel();
         addWidgetInGridBagPanel(outputPanel, gridBag, m_nonRemboursableValueLbl, 1, 7, 1, 1,0);
-        JLabel nonRemboursableUnit = new JLabel("<html>&#8364</html>");
+        JLabel nonRemboursableUnit = GUIWidgetFactory.createLabel("<html>&#8364</html>");
         addWidgetInGridBagPanel(outputPanel, gridBag, nonRemboursableUnit, 2, 7, 1, 1,0);
 
         return outputPanel;
 	}
 	private static java.awt.Dimension getPreferredSize(String html, boolean width, int prefSize)
 	{
-		JLabel resizer = new JLabel(html);
+		JLabel resizer = GUIWidgetFactory.createLabel(html);
 		View view = (View) resizer.getClientProperty(BasicHTML.propertyKey);
 		view.setSize(width ? prefSize : 0, width ? 0 : prefSize);
 		float w = view.getPreferredSpan(View.X_AXIS);
-		float h = view.getPreferredSpan(View.Y_AXIS);
+		float h = view.getPreferredSpan(View.Y_AXIS) + 30; // sinon certains labels sont rognés
 		return new Dimension((int) Math.ceil(w), (int) Math.ceil(h));
 	}
 	private class OutputLabel extends JLabel
@@ -238,6 +244,7 @@ public class GUIDevisScreenCoordinator extends GUICoordinator {
 		private void init()
 		{
 	        setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        GUIWidgetFactory.adapt(this);
 	        setPreferredSize(new Dimension(70, 30));
 	        setHorizontalAlignment(JLabel.RIGHT);
 		}
