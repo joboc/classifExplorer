@@ -613,6 +613,9 @@ public class ActsData {
       builtEntries.put(new ActCode("HBQK480"), new ActContent("Radiographies intrabuccales rétroalvéolaires et/ou rétrocoronaires de 6 secteurs distincts de 1 à 3 dents contigües", 47.88));
       builtEntries.put(new ActCode("HCQH001"), new ActContent("Sialographie", 50.54));
       builtEntries.put(new ActCode("HCQH002"), new ActContent("Sialographie avec scanographie des glandes salivaires", 50.54));
+      builtEntries.put(new ActCode("HBQK040"), new ActContent("Radiographies intrabuccales rétroalvéolaires sur un secteur de 1 à 3 dents contigües préinterventionnelle ou perinterventionnelle avec radiographie finale pour acte thérapeutique endodontique", 11.97));
+      builtEntries.put(new ActCode("HBQK061"), new ActContent("Radiographie intrabuccale rétroalvéolaire et/ou rétrocoronaire d'un secteur de 1 à 3 dents contigües, perinterventionnelle et/ou finale, en dehors  d'un acte thérapeutique endodontique", 3.99));
+      builtEntries.put(new ActCode("HBQK303"), new ActContent("Radiographies intrabuccales rétroalvéolaires sur un secteur de 1 à 3 dents contigües préinterventionnelle, perinterventionnelle et finale pour acte thérapeutique endodontique", 15.96));
       builtEntries.put(new ActCode("U"), new ModificateurContent("Acte réalisé en urgence par les médecins ou les chirurgiens dentistes, la nuit entre 20 h et 08 h", "25.15"));
       builtEntries.put(new ActCode("S"), new ModificateurContent("Acte réalisé en urgence par les pédiatres et les médecins généralistes ou acte thérapeutique réalisé en urgence sous anesthésie générale ou locorégionale par les autres médecins, la nuit de 00h à 08h  ", "40"));
       builtEntries.put(new ActCode("P"), new ModificateurContent("Acte réalisé en urgence par les pédiatres et médecins généralistes de 20h à 00h", "35"));
